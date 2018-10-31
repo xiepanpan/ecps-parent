@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration
+        1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
+        >
+<generatorConfiguration>
+    <!-- 制定数据库的驱动包的路径 千万别放中文路径下 -->
+    <classPathEntry location="C:\Users\xpp\.m2\repository\com\oracle\ojdbc14\10.2.0.4.0\ojdbc14-10.2.0.4.0.jar" />
+    <!-- 配置数据源和生成的代码所存放的位置 -->
+    <context id="context1">
+        <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@192.168.164.128:1521:orcl" userId="scott"
+                        password="tiger" />
+        <!-- 所生成的实体类的位置默认资源包src -->
+        <javaModelGenerator targetPackage="com.xiepanpan.ecps.model" targetProject="src/main/java" />
+        <!-- 所生成的sqlMap的影射文件的位置,默认资源包src -->
+        <sqlMapGenerator targetPackage="com.xiepanpan.ecps.mapper" targetProject="src/main/resources" />
+
+        <!-- 为哪些表生成代码 tableName:表名 schema:不用填写 -->
+
+        <table schema="" tableName="eb_brand" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>
