@@ -5,7 +5,7 @@
     <meta name="heading" content="品牌管理"/>
     <meta name="tag" content="tagName"/>
     <script type="text/javascript" src="<c:url value='/${system}/res/js/jquery.form.js'/>"></script>
-	<script type="text/javascript">var path="${path}"</script>
+    <script type="text/javascript">var path = "${path}"</script>
     <script type="text/javascript" src="${path}/ecps/console/res/item/js/addbrand.js"></script>
 </head>
 <body id="main">
@@ -28,6 +28,7 @@
         </div>
         <form id="form111" name="form111" action="${path }/brand/addBrand.do" method="post"
               enctype="multipart/form-data">
+            <input type="hidden" id="lastRealPath" name="lastRealPath"/>
             <div class="edit set">
                 <p><label><samp>*</samp>品牌名称：</label><input type="text" id="brandName" name="brandName"
                                                             class="text state" reg2="^[a-zA-Z0-9\u4e00-\u9fa5]{1,20}$"

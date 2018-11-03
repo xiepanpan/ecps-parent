@@ -4,6 +4,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.xiepanpan.ecps.utils.ECPSUtils;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,7 +18,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 
-import static java.lang.System.out;
 
 /**
  * describe:图片上传
@@ -30,7 +30,7 @@ import static java.lang.System.out;
 public class EbUploadController {
 
     @RequestMapping("/uploadPic.do")
-    public void uploadPic(HttpServletRequest request, PrintWriter printWriter) throws IOException {
+    public void uploadPic(HttpServletRequest request, PrintWriter printWriter,String lastRealPath) throws IOException {
         MultipartHttpServletRequest mr = (MultipartHttpServletRequest) request;
         //从表单中获取文件
         Iterator<String> iter = mr.getFileNames();
@@ -55,8 +55,14 @@ public class EbUploadController {
 
         //创建Jersey客户端
         Client client = Client.create();
+        //判断是否为第一次上传 如果不是 删除上一次上传的图片
+        WebResource webResource = null;
+        if (StringUtils.isNotBlank(lastRealPath)) {
+            webResource = client.resource(lastRealPath);
+            webResource.delete();
+        }
         //指定上传的绝对路径
-        WebResource webResource = client.resource(realPath);
+        webResource=client.resource(realPath);
         webResource.put(bytes);
         JSONObject jsonObject = new JSONObject();
         jsonObject.accumulate("realPath",realPath);

@@ -6,6 +6,7 @@ function submitUpload() {
             var jsonObj = $.parseJSON(responseText);
             $("#imgsImgSrc").attr("src",jsonObj.realPath);
             $("#imgs").val(jsonObj.relativePath);
+            $("#lastRealPath").val(jsonObj.realPath);
         },
         error:function () {
             alert("上传失败");
