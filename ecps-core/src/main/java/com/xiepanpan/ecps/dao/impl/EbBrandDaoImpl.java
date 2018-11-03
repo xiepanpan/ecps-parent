@@ -30,4 +30,13 @@ public class EbBrandDaoImpl extends SqlSessionDaoSupport implements EbBrandDao {
     public List<EbBrand> selectBrandAll() {
         return this.getSqlSession().selectList(ns+"selectBrandAll");
     }
+
+    /**
+     * 根据品牌名字查询是否有该品牌
+     * @return
+     */
+    @Override
+    public List<EbBrand> selectBrandByName(String brandName) {
+        return this.getSqlSession().selectList(ns+"selectBrandByName",brandName);
+    }
 }

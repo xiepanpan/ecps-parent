@@ -15,4 +15,6 @@ public interface EbBrandService {
     public void saveBrand(EbBrand ebBrand);
 
     public List<EbBrand> selectBrandAll();
+
+    public List<EbBrand> selectBrandByName(String brandName);
 }

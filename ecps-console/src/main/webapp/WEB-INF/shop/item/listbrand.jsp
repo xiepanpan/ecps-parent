@@ -44,7 +44,7 @@
                         <td>${brand.brandId }</td>
                         <td>
                             <img id='imgsImgSrc'
-                                 src=""
+                                 src="${request_file_path}${brand.imgs}"
                                  height="50" width="50"/></td>
                         <td>${brand.brandName }</td>
                         <td class="nwp">${brand.website}</td>

@@ -37,4 +37,9 @@ public class EbBrandServiceImpl implements EbBrandService {
     public List<EbBrand> selectBrandAll() {
         return ebBrandDao.selectBrandAll();
     }
+
+    @Override
+    public List<EbBrand> selectBrandByName(String brandName) {
+        return ebBrandDao.selectBrandByName(brandName);
+    }
 }

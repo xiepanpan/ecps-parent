@@ -26,7 +26,7 @@
             <a href="<c:url value="/${system }/item/brand/listBrand.do"/>" title="返回品牌管理"
                class="inb btn80x20">返回品牌管理</a>
         </div>
-        <form id="form111" name="form111" action="${path }/brand/addBrand.do" method="post"
+        <form id="form111" name="form111" action="${path }/item/addBrand.do" method="post"
               enctype="multipart/form-data">
             <input type="hidden" id="lastRealPath" name="lastRealPath"/>
             <div class="edit set">
@@ -40,7 +40,7 @@
                 </p>
                 <p><label></label><input type='file' size='27' id='imgsFile' name='imgsFile' class="file"
                                          onchange='submitUpload()'/><span id="submitImgTip" class="pos">请上传图片宽为120px，高为50px，大小不超过100K。</span>
-                    <input type='hidden' id='imgs' name='imgs' value='' reg2="^.+$" tip="亲！您忘记上传图片了。"/>
+                    <input type='hidden' id='imgs' name='imgs' value='' reg2="^.+$" tip="亲！您忘记上传图片了。"/><span></span>
                 </p>
 
                 <p><label>品牌网址：</label><input type="text" name="website" class="text state" maxlength="100"
