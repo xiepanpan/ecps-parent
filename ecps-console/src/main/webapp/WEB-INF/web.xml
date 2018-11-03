@@ -7,20 +7,21 @@
 		<listener-class>net.sf.navigator.menu.MenuContextListener</listener-class>
 	</listener>
 
-	<!-- <listener>
+	<!--加载beans.xml文件-->
+	 <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/beans.xml</param-value>
-	</context-param> -->
+		<param-value>classpath:beans.xml</param-value>
+	</context-param>
 	
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:springmvc-servlet.xml</param-value>
+			<param-value>classpath:springmvc.xml</param-value>
 		</init-param>
 		
 	</servlet>
@@ -45,7 +46,8 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-	
+
+	<!--utf-8编码设置-->
 	<filter> 
         <filter-name>SpringCharacterEncodingFilter</filter-name> 
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
