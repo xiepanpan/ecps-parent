@@ -1,7 +1,10 @@
 package com.xiepanpan.ecps.controller;
 
 import com.xiepanpan.ecps.model.EbBrand;
+import com.xiepanpan.ecps.model.Page;
+import com.xiepanpan.ecps.model.QueryCondition;
 import com.xiepanpan.ecps.service.EbBrandService;
+import com.xiepanpan.ecps.service.EbItemService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,8 @@ public class EbItemController {
 
     @Autowired
     EbBrandService ebBrandService;
+    @Autowired
+    EbItemService ebItemService;
 
     @RequestMapping("/toIndex.do")
     public String toIndex() {
@@ -69,5 +74,22 @@ public class EbItemController {
     public String addBrand(EbBrand ebBrand){
         ebBrandService.saveBrand(ebBrand);
         return "redirect:listBrand.do";
+    }
+
+    /**
+     * 展示所有商品
+     * @return
+     */
+    @RequestMapping("/listItem.do")
+    public String listItem(QueryCondition queryCondition,Model model) {
+        List<EbBrand> ebBrandList = ebBrandService.selectBrandAll();
+        model.addAttribute("ebBrandList",ebBrandList);
+        if (queryCondition.getPageNo()==null) {
+            queryCondition.setPageNo(1);
+        }
+        Page page = ebItemService.selectItemByCondition(queryCondition);
+        model.addAttribute("page",page);
+        model.addAttribute("qc",queryCondition);
+        return "item/list";
     }
 }

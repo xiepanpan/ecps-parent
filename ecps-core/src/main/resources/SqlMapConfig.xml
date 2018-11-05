@@ -4,5 +4,6 @@
 <configuration>
     <mappers>
         <mapper resource="com/xiepanpan/ecps/mapper/EbBrandMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbItemMapper.xml"/>
     </mappers>
 </configuration>
