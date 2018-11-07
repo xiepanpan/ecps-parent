@@ -99,13 +99,13 @@
         values (#{itemId,jdbcType=DECIMAL}, #{itemName,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR},
         #{brandId,jdbcType=DECIMAL}, #{catId,jdbcType=DECIMAL}, #{tagImgId,jdbcType=DECIMAL},
         #{tagImg,jdbcType=DECIMAL}, #{isNew,jdbcType=DECIMAL}, #{isGood,jdbcType=DECIMAL},
-        #{isHot,jdbcType=DECIMAL}, #{promotion,jdbcType=VARCHAR}, #{auditStatus,jdbcType=DECIMAL},
-        #{showStatus,jdbcType=DECIMAL}, #{imgs,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR},
+        #{isHot,jdbcType=DECIMAL}, #{promotion,jdbcType=VARCHAR}, 0,
+        1, #{imgs,jdbcType=VARCHAR}, #{keywords,jdbcType=VARCHAR},
         #{pageDesc,jdbcType=VARCHAR}, #{itemRecycle,jdbcType=DECIMAL}, #{onSaleTime,jdbcType=TIMESTAMP},
         #{checkTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=DECIMAL},
-        #{createTime,jdbcType=TIMESTAMP}, #{checkerUserId,jdbcType=DECIMAL}, #{fullPathDeploy,jdbcType=VARCHAR},
+        sysdate, #{checkerUserId,jdbcType=DECIMAL}, #{fullPathDeploy,jdbcType=VARCHAR},
         #{fullPathDeployOffer,jdbcType=VARCHAR}, #{originalItemId,jdbcType=DECIMAL}, #{lastStatus,jdbcType=DECIMAL},
-        #{merchantId,jdbcType=DECIMAL}, #{itemSort,jdbcType=DECIMAL}, #{sales,jdbcType=DECIMAL},
+        #{merchantId,jdbcType=DECIMAL}, #{itemSort,jdbcType=DECIMAL}, 0,
         #{createUserId,jdbcType=DECIMAL}, #{simLevel,jdbcType=DECIMAL}, #{giftDesc,jdbcType=VARCHAR},
         #{giftImg,jdbcType=VARCHAR}, #{giftShowType,jdbcType=VARCHAR}, #{imgSize1,jdbcType=VARCHAR}
         )

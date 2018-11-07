@@ -59,7 +59,7 @@
         <span class="l">
         </span>
                 <span class="r inb_a">
-            <a href="${path}/shop/item/addItem.jsp" class="btn80x20" title="添加商品">添加商品</a>
+            <a href="${path}/item/toAddItem.do" class="btn80x20" title="添加商品">添加商品</a>
         </span>
             </div>
 

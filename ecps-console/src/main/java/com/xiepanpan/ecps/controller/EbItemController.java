@@ -92,4 +92,11 @@ public class EbItemController {
         model.addAttribute("qc",queryCondition);
         return "item/list";
     }
+
+    @RequestMapping("/toAddItem.do")
+    public String toAddItem(Model model){
+        List<EbBrand> ebBrandList = ebBrandService.selectBrandAll();
+        model.addAttribute("bList",ebBrandList);
+        return "item/addItem";
+    }
 }
