@@ -105,25 +105,26 @@ $(function(){
     });
     //实现页面规格的自动增加和删除
     $("#button2").click(function(){
-        //alert(divNum);
-        var d=(++divNum);
-        var a=$(".sp_0:first").html();
-
-        a = a.replace(/specradio1/g,"specradio"+d);
-        a = a.replace(/skuType1/g,"skuType"+d);
-        a = a.replace(/marketPrice1/g,"marketPrice"+d);
-        a = a.replace(/skuPrice1/g,"skuPrice"+d);
-        a = a.replace(/stockInventory1/g,"stockInventory"+d);
-        a = a.replace(/skuUpperLimit1/g,"skuUpperLimit"+d);
-        a = a.replace(/location1/g,"location"+d);
-        a = a.replace(/sku1/g,"sku"+d);
-        a = a.replace(/sort1/g,"sort"+d);
-        a = a.replace(/showStatus1/g,"showStatus"+d);
-        alert(a);
-        var b=a.replace(/clickRemove\('#sp\_\d+'\)/g,"clickRemove('#sp_"+d+"')");
-
-        $("#button2").parent().parent().before("<div class='sp_0' id='sp_"+d+"'>"+b+"</div>");
-        $("#divNum").val(d);
+        //累加div的编码
+        divNum++;
+        var divHtml = $("#sp_0").html();
+        //把sp_0内部的代码加上div,修改div的id
+        divHtml="<div id='sp_'"+divNum+"' class='sp_0'>"+divHtml+"</div>";
+        //一个字符串的部分字符替换
+        divHtml = divHtml.replace(/specradio1/g,"specradio"+divNum);
+        //sort1 skuPrice1 marketPrice1 stockInventory1 skuUpperLimit1 sku1 location1 showStatus1 skuType
+        divHtml =divHtml.replace(/sort1/g,"sort"+divNum);
+        divHtml =divHtml.replace(/skuPrice1/g,"skuPrice"+divNum);
+        divHtml =divHtml.replace(/marketPrice1/g,"marketPrice"+divNum);
+        divHtml =divHtml.replace(/stockInventory1/g,"stockInventory"+divNum);
+        divHtml =divHtml.replace(/skuUpperLimit1/g,"skuUpperLimit"+divNum);
+        divHtml =divHtml.replace(/sku1/g,"sku"+divNum);
+        divHtml =divHtml.replace(/location1/g,"location"+divNum);
+        divHtml =divHtml.replace(/showStatus1/g,"showStatus"+divNum);
+        divHtml =divHtml.replace(/skuType1/g,"skuType"+divNum);
+        divHtml =divHtml.replace(/sp_0/g,"sp_"+divNum);
+        $('.page_c').before(divHtml);
+        $("#divNum").val(divNum);
     });
 
     $("#showStatus3").click(function(){
@@ -181,17 +182,14 @@ function changePri(obj){
     }
 }
 function clickRemove(id){
-    var b=$(id+" #showStatus1").val();
-    var a=$(".sp_0").length;
-    if(a == 1){
-        alert("默认规格不可删除");
-        return;
-    }
-    if(b == 0){
-        alert("规格必须是下架状态才能删除");
-        return;
-    }
-    $(id).remove();
+   if (id =="#sp_0") {
+       alert("默认的最小销售单元不能删除");
+       return;
+   }
+   if(confirm("确认要删除最小销售单元吗？")) {
+        $(id).remove();
+   }
+
 }
 
 

@@ -5,5 +5,10 @@
     <mappers>
         <mapper resource="com/xiepanpan/ecps/mapper/EbBrandMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbItemMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbFeatureMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbItemClobMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbParaValueMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbSkuMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbSpecValueMapper.xml"/>
     </mappers>
 </configuration>

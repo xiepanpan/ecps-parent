@@ -38,8 +38,8 @@
 
                 <p><label><samp>*</samp>商品名称：</label>
                     <input type="text" reg1="^(.{1,100})$" desc="100以内任意字符"
-                                                            id="itemName" name="itemName" class="text state"
-                                                            value="${ebItem.itemName}" maxlength="100"/></p>
+                           id="itemName" name="itemName" class="text state"
+                           value="${ebItem.itemName}" maxlength="100"/></p>
                 <input type="hidden" id="catId" name="catId" value="1"/>
                 <p><label>商品品牌：</label>
                     <select id="brandId" name="brandId">
@@ -102,39 +102,32 @@
             </div>
 
             <div id="tab_3" class="edit set" style="display: none">
-                <c:if test="${fn:length(paraList) == 0}">
-                    <p><label></label>无属性</p>
+                <c:if test="${fn:length(commList)==0}">
+                    <p><label>无属性</label></p>
                 </c:if>
-                <c:forEach items="${paraList }" var="para">
-                    <p><label>${para.featureName}：</label>
-                        <c:if test="${para.inputType == 1 }">
-                            <select name="${para.featureId }">
+                <c:forEach items="${commList}" var="feature">
+                    <p>
+                        <label>${feature.featureName}:</label>
+                        <c:if test="${feature.inputType==1}">
+                            <select>
                                 <option value="">请选择</option>
-                                <c:forEach items="${para.selectValues }" var="val">
-                                    <option value="${val }">${val }</option>
+                                <c:forEach items="${feature.selectValues}" var="val">
+                                    <option value="${val}">${val}</option>
                                 </c:forEach>
                             </select>
                         </c:if>
-                        <c:if test="${para.inputType == 2 }">
-                            <input type="radio" name="${para.featureId }" value="" checked="checked">无&nbsp;
-                            <c:forEach items="${para.selectValues }" var="val">
-                                <input type="radio" name="${para.featureId }" value="${val }">${val }&nbsp;
-                            </c:forEach>
-
-                        </c:if>
-                        <c:if test="${para.inputType == 3 }">
-                            <c:forEach items="${para.selectValues }" var="val">
-                                <input type="checkbox" name="${para.featureId }" value="${val }">${val }&nbsp;
+                        <c:if test="${feature.inputType==2}">
+                            <c:forEach items="${feature.selectValues}" var="val">
+                                <input type="radio" name="${feature.featureId}" value="${val}">${val}</input>
                             </c:forEach>
                         </c:if>
-                        <c:if test="${para.inputType == 4 }">
-                            <input type="text" name="${para.featureId }" value="">
+                        <c:if test="${feature.inputType==3}">
+                            <c:forEach items="${feature.selectValues}" var="val">
+                                <input type="checkbox" name="${feature.featureId}" value="${val}">${val}</input>
+                            </c:forEach>
                         </c:if>
-
                     </p>
                 </c:forEach>
-
-
             </div>
 
             <div id="tab_4" style="display:none">
@@ -148,19 +141,14 @@
                             </tr>
                         </c:if>
 
-                        <c:forEach items="${specList }" var="spec">
+                        <c:forEach items="${specList }" var="feature">
                             <tr>
-                                <td>${spec.featureName }:</td>
+                                <td>${feature.featureName}</td>
                                 <td>
-                                    <c:if test="${spec.inputType == 2 }">
-                                        <input type="radio" name="${spec.featureId }specradio1" value=""
-                                               class="specValue1" checked>无&nbsp;
-                                        <c:forEach items="${spec.selectValues}" var="val">
-                                            <input type="radio" name="${spec.featureId }specradio1" class="specValue1"
-                                                   value="${val }">${val }&nbsp;
-                                        </c:forEach>
-                                    </c:if>
-
+                                    <c:forEach items="${feature.selectValues}" var="val">
+                                        <input type="radio" name="${feature.featureId}specradio1"
+                                               value="${val}">${val}&nbsp;
+                                    </c:forEach>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -180,6 +168,7 @@
                                         <th>操作</th>
                                     </tr>
                                     <tr>
+                                        //
                                         <td width="10%" class="nwp"><input type="text" reg1="^[0-9]{0,2}$" desc="2个字符以内"
                                                                            id="sort" class="text20" name="sort1"
                                                                            maxlength="2" size="5"/></td>
