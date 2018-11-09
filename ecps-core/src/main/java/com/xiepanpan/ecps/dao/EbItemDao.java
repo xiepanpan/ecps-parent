@@ -18,5 +18,7 @@ public interface EbItemDao {
 
     public Integer selectItemByConditionCount(QueryCondition queryCondition);
 
+    public void saveItem(EbItem ebItem);
+
 
 }

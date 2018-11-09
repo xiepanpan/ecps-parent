@@ -38,4 +38,9 @@ public class EbItemDaoImpl extends SqlSessionDaoSupport implements EbItemDao {
     public Integer selectItemByConditionCount(QueryCondition queryCondition) {
         return this.getSqlSession().selectOne(ns+"selectItemByConditionCount",queryCondition);
     }
+
+    @Override
+    public void saveItem(EbItem ebItem) {
+        this.getSqlSession().insert(ns+"insert",ebItem);
+    }
 }

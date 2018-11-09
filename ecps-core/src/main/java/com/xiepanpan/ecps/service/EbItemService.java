@@ -1,8 +1,6 @@
 package com.xiepanpan.ecps.service;
 
-import com.xiepanpan.ecps.model.EbBrand;
-import com.xiepanpan.ecps.model.Page;
-import com.xiepanpan.ecps.model.QueryCondition;
+import com.xiepanpan.ecps.model.*;
 
 import java.util.List;
 
@@ -15,4 +13,6 @@ import java.util.List;
 public interface EbItemService {
 
     public Page selectItemByCondition(QueryCondition queryCondition);
+
+    public void saveItem(EbItem ebItem, EbItemClob ebItemClob,List<EbParaValue> ebParaValueList,List<EbSku> ebSkuList);
 }

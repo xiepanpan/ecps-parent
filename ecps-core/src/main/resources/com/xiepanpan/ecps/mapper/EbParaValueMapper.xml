@@ -48,7 +48,7 @@
     -->
     insert into EB_PARA_VALUE (PARA_ID, ITEM_ID, FEATURE_ID, 
       PARA_VALUE)
-    values (#{paraId,jdbcType=DECIMAL}, #{itemId,jdbcType=DECIMAL}, #{featureId,jdbcType=DECIMAL}, 
+    values (seqparavalueid.nextval, #{itemId,jdbcType=DECIMAL}, #{featureId,jdbcType=DECIMAL},
       #{paraValue,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiepanpan.ecps.model.EbParaValue" >

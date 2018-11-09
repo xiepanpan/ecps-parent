@@ -109,7 +109,7 @@
                     <p>
                         <label>${feature.featureName}:</label>
                         <c:if test="${feature.inputType==1}">
-                            <select>
+                            <select name="${feature.featureId }">
                                 <option value="">请选择</option>
                                 <c:forEach items="${feature.selectValues}" var="val">
                                     <option value="${val}">${val}</option>

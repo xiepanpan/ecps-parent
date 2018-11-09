@@ -48,7 +48,7 @@
     -->
     insert into EB_SPEC_VALUE (SPEC_ID, SKU_ID, FEATURE_ID, 
       SPEC_VALUE)
-    values (#{specId,jdbcType=DECIMAL}, #{skuId,jdbcType=DECIMAL}, #{featureId,jdbcType=DECIMAL}, 
+    values (seqspecvalueid.nextval, #{skuId,jdbcType=DECIMAL}, #{featureId,jdbcType=DECIMAL},
       #{specValue,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xiepanpan.ecps.model.EbSpecValue" >

@@ -109,7 +109,7 @@ $(function(){
         divNum++;
         var divHtml = $("#sp_0").html();
         //把sp_0内部的代码加上div,修改div的id
-        divHtml="<div id='sp_'"+divNum+"' class='sp_0'>"+divHtml+"</div>";
+        divHtml="<div id='sp_"+divNum+"' class='sp_0'>"+divHtml+"</div>";
         //一个字符串的部分字符替换
         divHtml = divHtml.replace(/specradio1/g,"specradio"+divNum);
         //sort1 skuPrice1 marketPrice1 stockInventory1 skuUpperLimit1 sku1 location1 showStatus1 skuType

@@ -1,11 +1,7 @@
 package com.xiepanpan.ecps.service.impl;
 
-import com.xiepanpan.ecps.dao.EbBrandDao;
-import com.xiepanpan.ecps.dao.EbItemDao;
-import com.xiepanpan.ecps.model.EbBrand;
-import com.xiepanpan.ecps.model.EbItem;
-import com.xiepanpan.ecps.model.Page;
-import com.xiepanpan.ecps.model.QueryCondition;
+import com.xiepanpan.ecps.dao.*;
+import com.xiepanpan.ecps.model.*;
 import com.xiepanpan.ecps.service.EbBrandService;
 import com.xiepanpan.ecps.service.EbItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +20,12 @@ public class EbItemServiceImpl implements EbItemService {
     
     @Autowired
     private EbItemDao ebItemDao;
+    @Autowired
+    private EbItemClobDao ebItemClobDao;
+    @Autowired
+    private EbParaValueDao ebParaValueDao;
+    @Autowired
+    private EbSkuDao ebSkuDao;
 
 
     @Override
@@ -40,5 +42,20 @@ public class EbItemServiceImpl implements EbItemService {
         List<EbItem> ebItemList = ebItemDao.selectItemByCondition(queryCondition);
         page.setList(ebItemList);
         return page;
+    }
+
+    /**
+     * 保存商品信息  事务已配置
+     * @param ebItem
+     * @param ebItemClob
+     * @param ebParaValueList
+     * @param ebSkuList
+     */
+    @Override
+    public void saveItem(EbItem ebItem, EbItemClob ebItemClob, List<EbParaValue> ebParaValueList, List<EbSku> ebSkuList) {
+        ebItemDao.saveItem(ebItem);
+        ebItemClobDao.saveItemClob(ebItemClob,ebItem.getItemId());
+        ebParaValueDao.saveParaValue(ebParaValueList,ebItem.getItemId());
+        ebSkuDao.saveSku(ebSkuList,ebItem.getItemId());
     }
 }
