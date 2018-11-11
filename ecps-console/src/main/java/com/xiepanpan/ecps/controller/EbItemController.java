@@ -222,4 +222,22 @@ public class EbItemController {
         return "redirect:listItem.do?showStatus=1";
     }
 
+    /**
+     * 展示所有审核的商品
+     * @param queryCondition
+     * @param model
+     * @return
+     */
+    @RequestMapping("/listAuditItem.do")
+    public String listAuditItem(QueryCondition queryCondition, Model model) {
+        List<EbBrand> ebBrandList = ebBrandService.selectBrandAll();
+        model.addAttribute("ebBrandList", ebBrandList);
+        if (queryCondition.getPageNo() == null) {
+            queryCondition.setPageNo(1);
+        }
+        Page page = ebItemService.selectItemByCondition(queryCondition);
+        model.addAttribute("page", page);
+        model.addAttribute("qc", queryCondition);
+        return "item/listAudit";
+    }
 }
