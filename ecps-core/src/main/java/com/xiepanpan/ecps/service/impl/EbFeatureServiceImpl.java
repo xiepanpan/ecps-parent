@@ -34,4 +34,9 @@ public class EbFeatureServiceImpl implements EbFeatureService {
     public List<EbFeature> selectSpecFeature() {
         return ebFeatureDao.selectSpecFeature();
     }
+
+    @Override
+    public List<EbFeature> selectIsSelectFeature() {
+        return ebFeatureDao.selectIsSelectFeature();
+    }
 }

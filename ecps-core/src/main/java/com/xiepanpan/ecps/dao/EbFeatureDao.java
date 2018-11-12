@@ -18,5 +18,6 @@ public interface EbFeatureDao {
 
     public List<EbFeature> selectSpecFeature();
 
+    public List<EbFeature> selectIsSelectFeature();
 
 }

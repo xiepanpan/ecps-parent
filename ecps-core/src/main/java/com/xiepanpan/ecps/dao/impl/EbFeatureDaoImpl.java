@@ -28,4 +28,13 @@ public class EbFeatureDaoImpl extends SqlSessionDaoSupport implements EbFeatureD
     public List<EbFeature> selectSpecFeature() {
         return this.getSqlSession().selectList(ns+"selectSpecFeature");
     }
+
+    /**
+     * 查询可筛选的属性
+     * @return
+     */
+    @Override
+    public List<EbFeature> selectIsSelectFeature() {
+        return this.getSqlSession().selectList(ns+"selectIsSelectFeature");
+    }
 }

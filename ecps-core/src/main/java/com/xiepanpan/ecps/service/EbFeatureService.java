@@ -17,4 +17,6 @@ public interface EbFeatureService {
     public List<EbFeature> selectCommFeature();
 
     public List<EbFeature> selectSpecFeature();
+
+    List<EbFeature> selectIsSelectFeature();
 }

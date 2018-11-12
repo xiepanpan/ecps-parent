@@ -188,4 +188,7 @@
     <select id="selectSpecFeature" resultMap="BaseResultMap">
         select * from eb_feature t where t.is_spec=1
     </select>
+    <select id="selectIsSelectFeature" resultMap="BaseResultMap">
+        select t.* from eb_feature t where t.is_select=1
+    </select>
 </mapper>
