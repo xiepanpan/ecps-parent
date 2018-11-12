@@ -218,8 +218,21 @@ public class EbItemController {
             }
         }
         ebItemService.saveItem(ebItem,ebItemClob,ebParaValueList,ebSkuList);
+        //通过审核的 未上架的
+        return "redirect:listItem.do?showStatus=1&auditStatus=1";
+    }
 
-        return "redirect:listItem.do?showStatus=1";
+    @RequestMapping("/listAuditItem.do")
+    public String listAuditItem(QueryCondition queryCondition, Model model) {
+        List<EbBrand> ebBrandList = ebBrandService.selectBrandAll();
+        model.addAttribute("ebBrandList", ebBrandList);
+        if (queryCondition.getPageNo() == null) {
+            queryCondition.setPageNo(1);
+        }
+        Page page = ebItemService.selectItemByCondition(queryCondition);
+        model.addAttribute("page", page);
+        model.addAttribute("qc", queryCondition);
+        return "item/listAudit";
     }
 
     /**
