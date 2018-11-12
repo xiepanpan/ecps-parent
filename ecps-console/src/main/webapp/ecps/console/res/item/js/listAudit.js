@@ -67,6 +67,21 @@ $(function () {
         var pageNo = $(this).val();
         $("#pageNo").val(pageNo);
         $("#form1").submit();
-    })
+    });
 
+    $("#addItemNoteConfirm").click(function () {
+        var notes = $("#itemNote").val();
+        $("#notes").val(notes);
+        //提交表单
+        $("#showForm").submit();
+    });
 })
+
+function isPass(itemId, auditStatus) {
+    $("#addItemNoteH2").html("商品审核");
+    $("#itemNote").val("");
+    //把itemId 和auditStatus给表单
+    $("#itemId").val(itemId);
+    $("#auditStatus1").val(auditStatus);
+    tipShow("#addItemNote");
+}

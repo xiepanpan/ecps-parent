@@ -7,6 +7,7 @@ import com.xiepanpan.ecps.service.EbItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public class EbItemServiceImpl implements EbItemService {
     private EbParaValueDao ebParaValueDao;
     @Autowired
     private EbSkuDao ebSkuDao;
+    @Autowired
+    private EbConsoleLogDao ebConsoleLogDao;
 
 
     @Override
@@ -57,5 +60,47 @@ public class EbItemServiceImpl implements EbItemService {
         ebItemClobDao.saveItemClob(ebItemClob,ebItem.getItemId());
         ebParaValueDao.saveParaValue(ebParaValueList,ebItem.getItemId());
         ebSkuDao.saveSku(ebSkuList,ebItem.getItemId());
+    }
+
+    /**
+     * 审核商品
+     * @param itemId
+     * @param auditStatus
+     * @param notes
+     */
+    @Override
+    public void auditItem(Long itemId, Short auditStatus, String notes) {
+        EbItem ebItem = new EbItem();
+        ebItem.setItemId(itemId);
+        ebItem.setAuditStatus(auditStatus);
+        ebItemDao.updateItem(ebItem);
+
+        EbConsoleLog ebConsoleLog = new EbConsoleLog();
+        ebConsoleLog.setEntityId(itemId);
+        ebConsoleLog.setEntityName("商品表");
+        ebConsoleLog.setNotes(notes);
+        ebConsoleLog.setOpTime(new Date());
+        ebConsoleLog.setOpType("审核");
+        ebConsoleLog.setTableName("EB_ITEM");
+        ebConsoleLog.setUserId(1L);
+        ebConsoleLogDao.saveConsoleLog(ebConsoleLog);
+    }
+
+    @Override
+    public void showItem(Long itemId, Short showStatus, String notes) {
+        EbItem ebItem = new EbItem();
+        ebItem.setItemId(itemId);
+        ebItem.setShowStatus(showStatus);
+        ebItemDao.updateItem(ebItem);
+
+        EbConsoleLog ebConsoleLog = new EbConsoleLog();
+        ebConsoleLog.setEntityId(itemId);
+        ebConsoleLog.setEntityName("商品表");
+        ebConsoleLog.setNotes(notes);
+        ebConsoleLog.setOpTime(new Date());
+        ebConsoleLog.setOpType("上下架");
+        ebConsoleLog.setTableName("EB_ITEM");
+        ebConsoleLog.setUserId(1L);
+        ebConsoleLogDao.saveConsoleLog(ebConsoleLog);
     }
 }

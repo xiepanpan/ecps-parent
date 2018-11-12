@@ -1,12 +1,12 @@
 $(function () {
     //获得上下架状态 只要在页面中获取值都是String类型
     var showStatus = parseInt($("#showStatus").val());
-    if (showStatus==1) {
-         $("#label4").attr("class","here");
-    }else if (showStatus==0) {
-        $("#label5").attr("class","here");
-    }else {
-        $("#label6").attr("class","here");
+    if (showStatus == 1) {
+        $("#label4").attr("class", "here");
+    } else if (showStatus == 0) {
+        $("#label5").attr("class", "here");
+    } else {
+        $("#label6").attr("class", "here");
     }
 
     //获得隐藏域的值
@@ -14,24 +14,24 @@ $(function () {
     var totalPage = parseInt($("#totalPage").val());
 
     //只有一页数据 都隐藏
-    if(pageNo==1 && pageNo == totalPage) {
+    if (pageNo == 1 && pageNo == totalPage) {
         $("#firstPage").hide();
         $("#lastPage").hide();
         $("#previous").hide();
         $("#next").hide();
-    }else if (pageNo==1 && totalPage>pageNo) {
+    } else if (pageNo == 1 && totalPage > pageNo) {
         //不止一页 当前页为第一页
         $("#firstPage").hide();
         $("#lastPage").show();
         $("#previous").hide();
         $("#next").show();
-    }else if (pageNo>1 && totalPage>pageNo) {
+    } else if (pageNo > 1 && totalPage > pageNo) {
         //当前页不是第一页
         $("#firstPage").show();
         $("#lastPage").show();
         $("#previous").show();
         $("#next").show();
-    }else if (pageNo==totalPage&&totalPage>1){
+    } else if (pageNo == totalPage && totalPage > 1) {
         //最后一页
         $("#firstPage").show();
         $("#lastPage").hide();
@@ -63,4 +63,19 @@ $(function () {
         $("#form1").submit();
     })
 
+    $("#addItemNoteConfirm").click(function () {
+        var notes = $("#itemNote").val();
+        $("#notes").val(notes);
+        //提交表单
+        $("#showForm").submit();
+    });
+
 })
+
+function isShow(itemId, showStatus) {
+    $("#itemNote").val("");
+    //把itemId 和auditStatus给表单
+    $("#itemId").val(itemId);
+    $("#showStatus1").val(showStatus);
+    tipShow("#addItemNote");
+}

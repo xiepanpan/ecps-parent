@@ -42,6 +42,7 @@
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="audit*" propagation="REQUIRED"/>
             <tx:method name="get*" read-only="true"/>
             <tx:method name="select*" read-only="true"/>
         </tx:attributes>

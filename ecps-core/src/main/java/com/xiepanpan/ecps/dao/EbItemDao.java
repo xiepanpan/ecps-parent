@@ -20,5 +20,11 @@ public interface EbItemDao {
 
     public void saveItem(EbItem ebItem);
 
+    /**
+     * 更新商品信息
+     * @param ebItem
+     */
+    public void updateItem(EbItem ebItem);
+
 
 }

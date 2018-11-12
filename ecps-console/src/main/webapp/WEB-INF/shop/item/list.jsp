@@ -17,6 +17,12 @@
     </div>
 </div>
 
+<form action="${path}/item/showItem.do" method="post" id="showForm">
+    <input id="itemId" name="itemId" type="hidden"/>
+    <input id="showStatus1" name="showStatus" type="hidden"/>
+    <input id="notes" name="notes" type="hidden"/>
+</form>
+
 <div class="frameR">
     <div class="content">
 
@@ -81,7 +87,7 @@
                         <td>${item.itemNo}</td>
                         <td>${item.itemName}</td>
                         <td><img alt=""
-                                 src=""
+                                 src="${request_file_path}${item.imgs}"
                                  width="50" height="50"></td>
                         <td>
                             <c:if test="${item.isNew ==1}"><span class="is"></span></c:if>
@@ -106,9 +112,15 @@
                         </td>
                         <td>
                             <a href="/ecps-console/shop/item/viewItem.jsp" title="查看">查看</a>
-                            <a href="/ecps-console/ecps/console/item/editItem.do?type=1&itemId=2384">编辑</a>
-                            <a href="javascript:void(0);" onclick="singleDel('2384')">删除</a>
-                            <a href="javascript:void(0);" group="2384,0" itemId=3184 showStatus="0">上架</a>
+                            <c:if test="${item.showStatus==0}">
+                                <a href="javascript:void(0);" onclick="isShow(${item.itemId},1)">下架</a>
+                                <a href="javascript:void(0);">发布</a>
+                            </c:if>
+                            <c:if test="${item.showStatus==1}">
+                                <a href="/ecps-console/ecps/console/item/editItem.do?type=1&itemId=2384">编辑</a>
+                                <a href="javascript:void(0);" onclick="singleDel('2384')">删除</a>
+                                <a href="javascript:void(0);" onclick="isShow(${item.itemId},0)">上架</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

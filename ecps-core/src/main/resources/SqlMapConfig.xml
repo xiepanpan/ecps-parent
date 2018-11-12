@@ -10,5 +10,6 @@
         <mapper resource="com/xiepanpan/ecps/mapper/EbParaValueMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbSkuMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbSpecValueMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbConsoleLogMapper.xml"/>
     </mappers>
 </configuration>

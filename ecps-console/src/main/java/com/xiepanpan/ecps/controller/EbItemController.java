@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -218,21 +217,8 @@ public class EbItemController {
             }
         }
         ebItemService.saveItem(ebItem,ebItemClob,ebParaValueList,ebSkuList);
-        //通过审核的 未上架的
-        return "redirect:listItem.do?showStatus=1&auditStatus=1";
-    }
 
-    @RequestMapping("/listAuditItem.do")
-    public String listAuditItem(QueryCondition queryCondition, Model model) {
-        List<EbBrand> ebBrandList = ebBrandService.selectBrandAll();
-        model.addAttribute("ebBrandList", ebBrandList);
-        if (queryCondition.getPageNo() == null) {
-            queryCondition.setPageNo(1);
-        }
-        Page page = ebItemService.selectItemByCondition(queryCondition);
-        model.addAttribute("page", page);
-        model.addAttribute("qc", queryCondition);
-        return "item/listAudit";
+        return "redirect:listItem.do?showStatus=1";
     }
 
     /**
@@ -253,4 +239,35 @@ public class EbItemController {
         model.addAttribute("qc", queryCondition);
         return "item/listAudit";
     }
+
+    /**
+     * 商品审核
+     * @param itemId
+     * @param auditStatus
+     * @param notes
+     * @return
+     */
+    @RequestMapping("/auditItem.do")
+    public String auditItem(Long itemId,Short auditStatus,String notes) {
+        ebItemService.auditItem(itemId,auditStatus,notes);
+        return "redirect:listAuditItem.do?showStatus=1&auditStatus=0";
+    }
+
+    /**
+     * 商品上下架
+     * @param itemId
+     * @param showStatus
+     * @param notes
+     * @return
+     */
+    @RequestMapping("/showItem.do")
+    public String showItem(Long itemId,Short showStatus,String notes) {
+        ebItemService.showItem(itemId,showStatus,notes);
+        String flag="1";
+        if(showStatus==1) {
+            flag="0";
+        }
+        return "redirect:listItem.do?showStatus="+flag+"&auditStatus=1";
+    }
+
 }

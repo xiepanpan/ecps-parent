@@ -16,6 +16,11 @@
         <jsp:include page="/${system}/common/itemmenu.jsp"/>
     </div>
 </div>
+<form action="${path}/item/auditItem.do" method="post" id="auditForm">
+    <input id="itemId" name="itemId" type="hidden"/>
+    <input id="auditStatus1" name="auditStatus" type="hidden"/>
+    <input id="notes" name="notes" type="hidden"/>
+</form>
 
 <div class="frameR">
     <div class="content">
@@ -108,8 +113,8 @@
                         <td>
                             <a href="/ecps-console/shop/item/viewItem.jsp" title="查看">查看</a>
                             <c:if test="${item.auditStatus ==0}">
-                                <a href="javascript:void(0);" onclick="isPass()">通过</a>
-                                <a href="javascript:void(0);" onclick="">不通过</a>
+                                <a href="javascript:void(0);" onclick="isPass(${item.itemId},1)">通过</a>
+                                <a href="javascript:void(0);" onclick="isPass(${item.itemId},2)">不通过</a>
                             </c:if>
                             <c:if test="${item.auditStatus ==1}">
                                 <a href="javascript:void(0);" onclick="">修改</a>
