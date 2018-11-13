@@ -547,4 +547,63 @@
             </if>
         </where>
     </select>
+
+    <resultMap type="com.xiepanpan.ecps.model.EbItem" id="selectIsSelectItemListRM" extends="BaseResultMap">
+        <result column="sku_price" property="skuPrice"/>
+        <collection property="paraList" ofType="com.xiepanpan.ecps.model.EbParaValue">
+            <id column="PARA_ID" property="paraId" jdbcType="DECIMAL" />
+            <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
+            <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL" />
+            <result column="PARA_VALUE" property="paraValue" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <!--solr索引sql -->
+    <select id="selectIsSelectItemList" resultMap="selectIsSelectItemListRM">
+        select *
+  from (select min(es.sku_price) sku_price, ei.*
+          from eb_item ei, eb_sku es
+         where ei.item_id = es.item_id
+         group by ei.ITEM_ID,
+                  ei.ITEM_NAME,
+                  ei.ITEM_NO,
+                  ei.BRAND_ID,
+                  ei.CAT_ID,
+                  ei.TAG_IMG_ID,
+                  ei.TAG_IMG,
+                  ei.IS_NEW,
+                  ei.IS_GOOD,
+                  ei.IS_HOT,
+                  ei.PROMOTION,
+                  ei.AUDIT_STATUS,
+                  ei.SHOW_STATUS,
+                  ei.IMGS,
+                  ei.KEYWORDS,
+                  ei.PAGE_DESC,
+                  ei.ITEM_RECYCLE,
+                  ei.ON_SALE_TIME,
+                  ei.CHECK_TIME,
+                  ei.UPDATE_TIME,
+                  ei.UPDATE_USER_ID,
+                  ei.CREATE_TIME,
+                  ei.CHECKER_USER_ID,
+                  ei.FULL_PATH_DEPLOY,
+                  ei.FULL_PATH_DEPLOY_OFFER,
+                  ei.ORIGINAL_ITEM_ID,
+                  ei.LAST_STATUS,
+                  ei.MERCHANT_ID,
+                  ei.ITEM_SORT,
+                  ei.SALES,
+                  ei.CREATE_USER_ID,
+                  ei.SIM_LEVEL,
+                  ei.GIFT_DESC,
+                  ei.GIFT_IMG,
+                  ei.GIFT_SHOW_TYPE,
+                  ei.IMG_SIZE1) e1,
+       eb_para_value ev,
+       eb_feature ef
+ where e1.item_id = ev.item_id
+   and ev.feature_id = ef.feature_id
+   and ef.is_select = 1
+
+    </select>
 </mapper>

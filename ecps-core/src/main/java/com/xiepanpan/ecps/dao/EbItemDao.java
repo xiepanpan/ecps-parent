@@ -26,5 +26,7 @@ public interface EbItemDao {
      */
     public void updateItem(EbItem ebItem);
 
+    public List<EbItem> selectIsSelectItemList();
+
 
 }

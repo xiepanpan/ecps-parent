@@ -22,6 +22,9 @@ public class EbBrandServiceImplTest {
     @Autowired
     EbBrandService ebBrandService;
 
+    /**
+     * 测试品牌保存
+     */
     @Test
     public void saveBrand() {
         EbBrand ebBrand = new EbBrand();

@@ -48,4 +48,9 @@ public class EbItemDaoImpl extends SqlSessionDaoSupport implements EbItemDao {
     public void updateItem(EbItem ebItem) {
         this.getSqlSession().update(ns+"updateByPrimaryKeySelective",ebItem);
     }
+
+    @Override
+    public List<EbItem> selectIsSelectItemList() {
+        return this.getSqlSession().selectList(ns+"selectIsSelectItemList");
+    }
 }
