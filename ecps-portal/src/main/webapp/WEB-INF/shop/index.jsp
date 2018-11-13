@@ -507,37 +507,34 @@
 
             <li><b>价格：</b>
                 <p>
-                    <a href="javascript:void(0);" title="不限" class="here">不限</a>
-                    <a href="javascript:void(0);" title="1-99">1-499</a>
-                    <a href="javascript:void(0);" title="100-199">500-999</a>
-                    <a href="javascript:void(0);" title="200-499">1000-1999</a>
-                    <a href="javascript:void(0);" title="200-499">2000-2999</a>
-                    <a href="javascript:void(0);" title="200-499">3000-3999</a>
-                    <a href="javascript:void(0);" title="200-499">4000-4999</a>
-                    <a href="javascript:void(0);" title="500以上">5000以上</a>
+                    <a href="javascript:void(0);" fValue="" fType="price" class="here">不限</a>
+                    <a href="javascript:void(0);" fValue="1-499" fType="price">1-499</a>
+                    <a href="javascript:void(0);" fValue="500-999" fType="price">500-999</a>
+                    <a href="javascript:void(0);" fValue="1000-1999" fType="price">1000-1999</a>
+                    <a href="javascript:void(0);" fValue="2000-2999" fType="price">2000-2999</a>
+                    <a href="javascript:void(0);" fValue="3000-3999" fType="price">3000-3999</a>
+                    <a href="javascript:void(0);" fValue="4000-4999" fType="price">4000-4999</a>
+                    <a href="javascript:void(0);" fValue="5000-1000000" fType="price">5000以上</a>
                 </p></li>
 
             <li><b>品牌：</b>
                 <p>
-                    <a href="javascript:void(0);" title="不限" class="here">不限</a>
+                    <a href="javascript:void(0);" fValue="" fType="brand" class="here">不限</a>
                     <c:forEach items="${brandList}" var="brand">
-                        <a href="javascript:void(0);">${brand.brandName }</a>
+                        <a href="javascript:void(0);" fValue="${brand.brandId}" fType="brand">${brand.brandName }</a>
                     </c:forEach>
                 </p></li>
             <li><b>商品搜索：</b>
                 <p>
-                    <input type="text" class="txt_sch gray" id="" name=""
-                           onfocus="if(this.value=='请输入商品名称关键字'){this.value='';this.className='txt_sch'}"
-                           onblur="if(this.value==''){this.value='请输入商品名称关键字';this.className='txt_sch gray'}"
-                           value="请输入商品名称关键字"/>
+                    <input type="text" class="txt_sch gray" id="keyWords" />
                     <input type="submit" value="搜索" class="hand btn60x26"/>
                 </p></li>
             <c:forEach items="${featureList}" var="feature">
                 <li style="display:none"><b>${feature.featureName}:</b>
                     <p>
-                        <a href="javascript:void(0);" title="不限" class="here">不限</a>
+                        <a href="javascript:void(0);" fValue="" fType="feature" class="here">不限</a>
                         <c:forEach items="${feature.selectValues}" var="val">
-                            <a href="javascript:void(0);">${val}</a>
+                            <a href="javascript:void(0);" fValue="${val}" fType="feature" >${val}</a>
                         </c:forEach>
                     </p>
                 </li>

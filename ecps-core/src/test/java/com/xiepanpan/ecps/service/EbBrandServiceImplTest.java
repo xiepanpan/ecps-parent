@@ -21,6 +21,8 @@ public class EbBrandServiceImplTest {
 
     @Autowired
     EbBrandService ebBrandService;
+    @Autowired
+    EbIndexService ebIndexService;
 
     /**
      * 测试品牌保存
@@ -38,5 +40,13 @@ public class EbBrandServiceImplTest {
 
     @Test
     public void selectBrandAll() {
+    }
+
+    /**
+     * solr导入索引测试
+     */
+    @Test
+    public void importIndexTest() throws Exception {
+        ebIndexService.importIndex();
     }
 }

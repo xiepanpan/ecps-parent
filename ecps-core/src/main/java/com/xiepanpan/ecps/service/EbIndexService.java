@@ -1,7 +1,9 @@
 package com.xiepanpan.ecps.service;
 
 import com.xiepanpan.ecps.model.*;
+import org.apache.solr.client.solrj.SolrServerException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -12,23 +14,18 @@ import java.util.List;
  */
 public interface EbIndexService {
 
-    public Page selectItemByCondition(QueryCondition queryCondition);
-
-    public void saveItem(EbItem ebItem, EbItemClob ebItemClob, List<EbParaValue> ebParaValueList, List<EbSku> ebSkuList);
+    /**
+     * 导入索引
+     */
+    public void importIndex() throws Exception;
 
     /**
-     * 审核商品
-     * @param itemId
-     * @param auditStatus
-     * @param notes
+     * 添加索引
      */
-    public void auditItem(Long itemId, Short auditStatus, String notes);
+    public void addIndex();
 
     /**
-     * 商品上下架
-     * @param itemId
-     * @param showStatus
-     * @param notes
+     * 删除索引
      */
-    public void showItem(Long itemId, Short showStatus, String notes);
+    public void deleteIndex();
 }

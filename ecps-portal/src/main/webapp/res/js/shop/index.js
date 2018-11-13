@@ -47,6 +47,31 @@ $(function () {
         }
         obj.removeClass('here');
         $(this).addClass('here');
+
+        var price="";
+        var brandId="";
+        var keyWords=$("#keyWords").val();
+        var paraVals="";
+        //循环a链接找到被选中的a
+        $('.filter li a').each(function () {
+            var clazz = $(this).attr("class");
+            if (clazz=="here"){
+                //获得a的类型
+                var fType = $(this).attr("fType");
+                var fValue = $(this).attr("fValue");
+                if (fType=="price") {
+                    price = fValue;
+                }else if (fType == "brand") {
+                    brandId = fValue;
+                }else if (fType == "feature"&&fValue!="") {
+                    paraVals = paraVals + fValue + ",";
+                }
+            }
+        })
+        // alert(price+"==========="+brandId+"==========="+keyWords+"======="+paraVals)
+        var iPath= "${path}/item/listItem.do?price="+price+"&brandId="+brandId+"&keyWord="+keyWords+"&paraVals="+paraVals;
+        //重置src即可刷新iframe
+        $("#itemListIframe").attr("src",iPath);
     });
 
     $("#filterRest").click(function () {
