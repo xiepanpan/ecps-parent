@@ -1,8 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@include file="taglibs.jsp" %>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
@@ -52,158 +54,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 			<ul class="uls i_150x150 x4_150x150b">
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<!-- dt 10个文字+... -->
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉摩托罗拉摩托...</a></dt>
-						<!-- dt 25个文字+... -->
-						<dd class="h40">手手机下单就返下单就返新品上市上手手机下单就就...</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-					<img src="../res/img/pic/hot.gif" alt="热门" class="type" />
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品！！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上市</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉摩托罗拉摩托...</a></dt>
-						<dd class="h40">手手机下单就返下单就返新品上市上...</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-					<img src="../res/img/pic/hot.gif" alt="热门" class="type" />
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品！！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上市</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<!-- dt 10个文字+... -->
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉摩托罗拉摩托...</a></dt>
-						<!-- dt 25个文字+... -->
-						<dd class="h40">手手机下单就返下单就返新品上市上手手机下单就就...</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-					<img src="../res/img/pic/hot.gif" alt="热门" class="type" />
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品！！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上市</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉摩托罗拉摩托...</a></dt>
-						<dd class="h40">手手机下单就返下单就返新品上市上...</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-					<img src="../res/img/pic/hot.gif" alt="热门" class="type" />
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品！！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上！</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
-				<li>
-					<a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="../res/img/pic/p140X140b.png" alt="摩托罗拉XT319" /></a>
-					<dl>
-						<dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">摩托罗拉XT319</a></dt>
-						<dd class="h40">3G手机（黑）WCDMA/GSM 新品上市</dd>
-						<dd class="orange">￥3599 ~ ￥4599</dd>
-						<dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
-					</dl>
-				</li>
+				<c:forEach items="${ebItemList}" var="ebItem">
+                    <li>
+                        <a href="./productDetail.jsp" title="张同来" target="_blank" class="pic"><img src="${request_file_path}${ebItem.imgs}" /></a>
+                        <dl>
+                            <!-- dt 10个文字+... -->
+                            <dt><a href="./productDetail.jsp" title="摩托罗拉XT319" target="_blank">${ebItem.itemName}</a></dt>
+                            <!-- dt 25个文字+... -->
+                            <dd class="h40">${ebItem.promotion}</dd>
+                            <dd class="orange">${ebItem.skuPrice}</dd>
+                            <dd><a href="./productDetail.jsp" title="购买裸机" class="inb btn70x21 mr">购买裸机</a><a href="./productDetail.jsp" title="优惠购机" class="inb btn70x21">优惠购机</a></dd>
+                        </dl>
+                        <img src="../res/img/pic/hot.gif" alt="热门" class="type" />
+                    </li>
+                </c:forEach>
 			</ul>
 
 			<div class="page pb15"><span class="r inb_a page_b">

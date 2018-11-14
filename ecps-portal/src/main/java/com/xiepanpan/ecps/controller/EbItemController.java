@@ -2,6 +2,7 @@ package com.xiepanpan.ecps.controller;
 
 import com.xiepanpan.ecps.model.EbBrand;
 import com.xiepanpan.ecps.model.EbFeature;
+import com.xiepanpan.ecps.model.EbItem;
 import com.xiepanpan.ecps.service.EbBrandService;
 import com.xiepanpan.ecps.service.EbFeatureService;
 import com.xiepanpan.ecps.service.EbItemService;
@@ -26,6 +27,8 @@ public class EbItemController {
     private EbBrandService ebBrandService;
     @Autowired
     private EbFeatureService ebFeatureService;
+    @Autowired
+    private EbItemService ebItemService;
 
     /**
      * 跳转到首页
@@ -44,10 +47,16 @@ public class EbItemController {
 
     /**
      * 首页的搜索结果页面
+     * @param price 价格
+     * @param brandId 品牌Id
+     * @param keyWords 关键词搜索结果
+     * @param paraVals 参数值
      * @return
      */
     @RequestMapping("/listItem.do")
-    public String listItem() {
+    public String listItem(String price,Long brandId,String keyWords,String paraVals,Model model) throws Exception {
+        List<EbItem> ebItemList = ebItemService.listItemByIndex(price, brandId, keyWords, paraVals);
+        model.addAttribute("ebItemList",ebItemList);
         return "phoneClassification";
     }
 }

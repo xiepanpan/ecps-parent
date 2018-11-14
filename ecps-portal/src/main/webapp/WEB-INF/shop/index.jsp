@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="${path}/res/css/style.css"/>
     <script src="${path}/res/js/jquery.js"></script>
     <script src="${path}/res/js/com.js"></script>
+    <script type="text/javascript">var path="${path}"</script>
     <script type="text/javascript" src="${path}/res/js/shop/index.js"></script>
 </head>
 <body>

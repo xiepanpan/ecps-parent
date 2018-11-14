@@ -563,6 +563,8 @@
   from (select min(es.sku_price) sku_price, ei.*
           from eb_item ei, eb_sku es
          where ei.item_id = es.item_id
+         and ei.audit_status = 1
+         and ei.show_status = 0
          group by ei.ITEM_ID,
                   ei.ITEM_NAME,
                   ei.ITEM_NO,

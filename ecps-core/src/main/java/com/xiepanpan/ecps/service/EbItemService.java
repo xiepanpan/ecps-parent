@@ -1,6 +1,7 @@
 package com.xiepanpan.ecps.service;
 
 import com.xiepanpan.ecps.model.*;
+import org.apache.solr.client.solrj.SolrServerException;
 
 import java.util.List;
 
@@ -31,4 +32,14 @@ public interface EbItemService {
      * @param notes
      */
     public void showItem(Long itemId, Short showStatus, String notes);
+
+    /**
+     * 根据索引查询符合条件的商品集合
+     * @param price
+     * @param brandId
+     * @param keyWords
+     * @param paraVals
+     * @return
+     */
+    public List<EbItem> listItemByIndex(String price,Long brandId,String keyWords,String paraVals) throws Exception;
 }

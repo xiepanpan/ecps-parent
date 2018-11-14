@@ -43,6 +43,7 @@ public class EbIndexServiceImpl implements EbIndexService {
 
             String paraVals = "";
             for (EbParaValue ebParaValue:ebItem.getParaList()){
+                //使用空格来分割参数
                 paraVals = paraVals+ebParaValue.getParaValue()+" ";
             }
             solrInputDocument.addField("para_vals",paraVals);

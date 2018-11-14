@@ -69,7 +69,7 @@ $(function () {
             }
         })
         // alert(price+"==========="+brandId+"==========="+keyWords+"======="+paraVals)
-        var iPath= "${path}/item/listItem.do?price="+price+"&brandId="+brandId+"&keyWord="+keyWords+"&paraVals="+paraVals;
+        var iPath= path+"/item/listItem.do?price="+price+"&brandId="+brandId+"&keyWords="+keyWords+"&paraVals="+paraVals;
         //重置src即可刷新iframe
         $("#itemListIframe").attr("src",iPath);
     });
