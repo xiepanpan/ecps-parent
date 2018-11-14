@@ -1,7 +1,7 @@
 $(function () {
 
     $("#loginAlertIs").click(function () {
-        tipShow('#loginAlert');
+        window.location.href = path+"/user/toLogin.do";
     });
 
     $("#promptAlertIs").click(function () {

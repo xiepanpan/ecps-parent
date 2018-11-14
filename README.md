@@ -18,3 +18,9 @@ Jersey客户端和服务端
 #### 分页
 
 oracle rownum 大于号不支持 
+
+http://localhost:8093/ecps-portal/item/toIndex.do
+
+### 商品上下架
+### 商品搜索
+用solr实现

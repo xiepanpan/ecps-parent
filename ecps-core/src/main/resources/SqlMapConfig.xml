@@ -11,5 +11,6 @@
         <mapper resource="com/xiepanpan/ecps/mapper/EbSkuMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbSpecValueMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbConsoleLogMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/TsPtlUserMapper.xml"/>
     </mappers>
 </configuration>
