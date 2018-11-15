@@ -15,7 +15,7 @@ import java.util.Map;
 public interface TsPtlUserService {
 
     /**
-     * 根据用户名密码查询用户信息
+     * 根据用户id查询收货地址
      * @param map
      * @return
      */

@@ -25,7 +25,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user/login/**"/>
-            <bean class="com.xiepanpan.ecps.LoginInterceptor"></bean>
+            <bean class="com.xiepanpan.ecps.interceptor.LoginInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

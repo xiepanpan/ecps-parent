@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="${path}/res/css/style.css"/>
     <script src="${path}/res/js/jquery.js"></script>
     <script src="${path}/res/js/com.js"></script>
-    <script type="text/javascript">var path="${path}"</script>
+    <script type="text/javascript">var path = "${path}"</script>
     <script type="text/javascript" src="${path}/res/js/userStauts.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -385,46 +385,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>王强</td>
-                        <td>北京 北京市 海淀区</td>
-                        <td>XXX大道XXX号XX室</td>
-                        <td>100081</td>
-                        <td>13750532806</td>
-                        <td class="def"><a href="javascript:void(0);" title="设为默认">设为默认</a></td>
-                        <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
-                                href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
-                    </tr>
-                    <tr class="here">
-                        <td>王强</td>
-                        <td>北京 北京市 海淀区</td>
-                        <td>XXX大道XXX号XX室</td>
-                        <td>100081</td>
-                        <td>13750532806</td>
-                        <td class="def blue">设为默认</td>
-                        <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
-                                href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
-                    </tr>
-                    <tr>
-                        <td>王强</td>
-                        <td>北京 北京市 海淀区</td>
-                        <td>XXX大道XXX号XX室</td>
-                        <td>100081</td>
-                        <td>13750532806</td>
-                        <td class="def"><a href="javascript:void(0);" title="设为默认">设为默认</a></td>
-                        <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
-                                href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
-                    </tr>
-                    <tr>
-                        <td>王强</td>
-                        <td>北京 北京市 海淀区</td>
-                        <td>XXX大道XXX号XX室</td>
-                        <td>100081</td>
-                        <td>13750532806</td>
-                        <td class="def"><a href="javascript:void(0);" title="设为默认">设为默认</a></td>
-                        <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
-                                href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
-                    </tr>
+                    <c:forEach items="${ebShipAddrList}" var="ebShipAddr">
+                        <tr <c:if test="${ebShipAddr.defaultAddr eq 1}">class='here'</c:if>>
+                            <td>${ebShipAddr.shipName}</td>
+                            <td>${ebShipAddr.province}&nbsp;${ebShipAddr.city}&nbsp;${ebShipAddr.district}</td>
+                            <td>${ebShipAddr.addr}</td>
+                            <td>${ebShipAddr.zipCode}</td>
+                            <td>${ebShipAddr.phone}</td>
+                            <td class="def"><a href="javascript:void(0);" title="设为默认">设为默认</a></td>
+                            <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
+                                    href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
 

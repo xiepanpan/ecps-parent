@@ -1,4 +1,4 @@
-package com.xiepanpan.ecps;
+package com.xiepanpan.ecps.interceptor;
 
 import com.xiepanpan.ecps.model.TsPtlUser;
 import org.springframework.web.servlet.HandlerInterceptor;

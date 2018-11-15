@@ -1,6 +1,8 @@
 package com.xiepanpan.ecps.controller;
 
+import com.xiepanpan.ecps.model.EbShipAddr;
 import com.xiepanpan.ecps.model.TsPtlUser;
+import com.xiepanpan.ecps.service.EbShipAddrService;
 import com.xiepanpan.ecps.service.TsPtlUserService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
 import com.xiepanpan.ecps.utils.MD5;
@@ -36,6 +38,8 @@ public class EbUserController {
 
     @Autowired
     private TsPtlUserService tsPtlUserService;
+    @Autowired
+    private EbShipAddrService ebShipAddrService;
 
     /**
      *  跳转到登录界面
@@ -160,11 +164,15 @@ public class EbUserController {
 
     /**
      * 展示收货地址
+     * @param session
+     * @param model
      * @return
      */
     @RequestMapping("/login/listAddr.do")
-    public String listAddr(){
+    public String listAddr(HttpSession session,Model model) {
+        TsPtlUser user = (TsPtlUser) session.getAttribute("user");
+        List<EbShipAddr> ebShipAddrList = ebShipAddrService.selectAddrByUserId(user.getPtlUserId());
+        model.addAttribute("ebShipAddrList",ebShipAddrList);
         return "person/deliverAddress";
     }
-
 }
