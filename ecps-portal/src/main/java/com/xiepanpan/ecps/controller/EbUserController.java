@@ -1,19 +1,16 @@
 package com.xiepanpan.ecps.controller;
 
-import com.xiepanpan.ecps.model.EbBrand;
-import com.xiepanpan.ecps.model.EbFeature;
-import com.xiepanpan.ecps.model.EbItem;
 import com.xiepanpan.ecps.model.TsPtlUser;
-import com.xiepanpan.ecps.service.EbBrandService;
-import com.xiepanpan.ecps.service.EbFeatureService;
-import com.xiepanpan.ecps.service.EbItemService;
 import com.xiepanpan.ecps.service.TsPtlUserService;
+import com.xiepanpan.ecps.utils.ECPSUtils;
 import com.xiepanpan.ecps.utils.MD5;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -141,6 +138,33 @@ public class EbUserController {
         session.setAttribute("user",tsPtlUser);
         // 重定向到商品首页
         return "redirect:/item/toIndex.do";
+    }
+
+    @RequestMapping(value = "/getUser.do")
+    @ResponseBody
+    public void getUser(HttpSession httpSession,HttpServletResponse response) {
+        TsPtlUser user = (TsPtlUser) httpSession.getAttribute("user");
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("user",user);
+        ECPSUtils.printAjax(response,jsonObject.toString());
+    }
+
+    /**
+     * 跳转个人首页
+     * @return
+     */
+    @RequestMapping("/login/toPersonIndex.do")
+    public String toPersonIndex(){
+        return "person/index";
+    }
+
+    /**
+     * 展示收货地址
+     * @return
+     */
+    @RequestMapping("/login/listAddr.do")
+    public String listAddr(){
+        return "person/deliverAddress";
     }
 
 }

@@ -1,5 +1,16 @@
 $(function () {
 
+    // $.ajax({
+    //     url:path+"/user/getUser.do",
+    //     type:"post",
+    //     dataType:"json",
+    //     success:function (data) {
+    //         if (data.user!=null){
+    //             $("#loginAlertIs").html(data.user.username);
+    //         }
+    //     }
+    // })
+
     $("#loginAlertIs").click(function () {
         window.location.href = path+"/user/toLogin.do";
     });

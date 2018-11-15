@@ -30,6 +30,7 @@
     <script src="${path}/res/js/com.js"></script>
     <script type="text/javascript">var path="${path}"</script>
     <script type="text/javascript" src="${path}/res/js/shop/index.js"></script>
+    <script type="text/javascript" src="${path}/res/js/userStauts.js"></script>
 </head>
 <body>
 <div id="tipAlert" class="w tips">
@@ -261,7 +262,7 @@
 
 <div class="w loc">
 
-    <p class="l"><a href="#" title="商城首页">商城首页</a><samp>|</samp><a href="./person/index.jsp" title="我的商城">我的商城</a></p>
+    <p class="l"><a href="#" title="商城首页">商城首页</a><samp>|</samp><a href="${path}/user/login/toPersonIndex.do" title="我的商城">我的商城</a></p>
 
     <dl id="cart" class="cart l">
         <dt><a href="#" title="结算">结算</a>购物车:<b id="">123</b>件</dt>

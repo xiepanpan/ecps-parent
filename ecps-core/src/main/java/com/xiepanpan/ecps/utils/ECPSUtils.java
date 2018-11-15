@@ -3,6 +3,7 @@ package com.xiepanpan.ecps.utils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -43,6 +44,21 @@ public class ECPSUtils {
             String solrPath = ECPSUtils.readProp("solr_path");
             solrServer = new HttpSolrServer(solrPath);
             return  solrServer;
+        }
+    }
+
+    /**
+     * 输出ajax 解决中文乱码问题
+     * @param response
+     * @param result
+     */
+    public static void printAjax(HttpServletResponse response,String result){
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            response.getWriter().write(result);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
