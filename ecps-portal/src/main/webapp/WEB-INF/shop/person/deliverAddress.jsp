@@ -25,6 +25,7 @@
     <script src="${path}/res/js/com.js"></script>
     <script type="text/javascript">var path = "${path}"</script>
     <script type="text/javascript" src="${path}/res/js/userStauts.js"></script>
+    <script type="text/javascript" src="${path}/res/js/person/deliverAddress.js"></script>
     <script type="text/javascript">
         $(function () {
 
@@ -367,7 +368,7 @@
             <div class="tl"></div>
             <div class="tr"></div>
             <div class="ofc">
-
+                <input type="hidden" id="addrLength" value="${fn:length(ebShipAddrList)}">
                 <h2 class="h2 h2_r2"><em title="个人资料">收货地址</em></h2>
 
                 <h3 class="h3_r">已存收货地址列表<span>最多保存5个收货地址</span></h3>
@@ -388,12 +389,12 @@
                     <c:forEach items="${ebShipAddrList}" var="ebShipAddr">
                         <tr <c:if test="${ebShipAddr.defaultAddr eq 1}">class='here'</c:if>>
                             <td>${ebShipAddr.shipName}</td>
-                            <td>${ebShipAddr.province}&nbsp;${ebShipAddr.city}&nbsp;${ebShipAddr.district}</td>
+                            <td>${ebShipAddr.provText}&nbsp;${ebShipAddr.cityText}&nbsp;${ebShipAddr.distText}</td>
                             <td>${ebShipAddr.addr}</td>
                             <td>${ebShipAddr.zipCode}</td>
                             <td>${ebShipAddr.phone}</td>
                             <td class="def"><a href="javascript:void(0);" title="设为默认">设为默认</a></td>
-                            <td><a href="javascript:void(0);" title="修改" onclick="modify('1')" class="blue">[修改]</a><a
+                            <td><a href="javascript:void(0);" title="修改" onclick="modify(${ebShipAddr.shipAddrId})" class="blue">[修改]</a><a
                                     href="javascript:void(0);" title="删除" onclick="del(this)" class="blue">[删除]</a></td>
                         </tr>
                     </c:forEach>
@@ -402,34 +403,36 @@
 
                 <h3 class="h3_r">新增/修改收货地址<span>手机、固定电话选填一项，其余均为必填</span></h3>
 
-                <form id="jvForm" action="profile.do" method="post">
-                    <input type="hidden" name="returnUrl" value="${returnUrl}"/>
-                    <input type="hidden" name="processUrl" value="${processUrl}"/>
+                <form id="jvForm" action="${path}/user/login/saveOrUpdateAddr.do" method="post">
+                    <input type="hidden" name="shipAddrId" id="shipAddrId">
                     <ul class="uls form">
                         <li id="errorName" class="errorTip" style="display:none">${error}</li>
                         <li>
                             <label for="username"><samp>*</samp>收货人姓名：</label>
-                            <span class="bg_text"><input type="text" id="username" name="username" vld="{required:true}"
+                            <span class="bg_text"><input type="text" id="shipName" name="shipName" vld="{required:true}"
                                                          maxLength="100"/></span>
                             <span class="pos"><span class="tip okTip">&nbsp;</span></span>
                         </li>
                         <li>
                             <label for="residence"><samp>*</samp>地　　址：</label>
                             <span class="word">
-						<select name="">
+						<select name="province" id="province">
 							<option value="" selected>省/直辖市</option>
-							<option value=""></option>
-						</select><select name="">
+                            <c:forEach items="${ebAreaList}" var="ebArea">
+                                <option value="${ebArea.areaId}">${ebArea.areaName}</option>
+                            </c:forEach>
+						</select>
+                                <select name="city" id="mycity" >
 							<option value="" selected>城市</option>
 							<option value=""></option>
-						</select><select name="">
+						</select><select name="district" id="district">
 							<option value="" selected>县/区</option>
 							<option value=""></option>
 						</select></span>
                         </li>
                         <li>
                             <label for="nick"><samp>*</samp>街道地址：</label>
-                            <span class="bg_text"><input type="text" id="nick" name="nick" maxLength="32"
+                            <span class="bg_text"><input type="text" id="addr" name="addr" maxLength="32"
                                                          vld="{required:true}"/></span>
                             <span class="pos"><span class="tip errorTip">用户名为4-20位字母、数字或中文组成，字母区分大小写。</span></span>
                         </li>
@@ -440,13 +443,13 @@
                         </li>
                         <li>
                             <label for="telphone"><samp>*</samp>联系电话：</label>
-                            <span class="bg_text"><input type="text" id="telphone" name="telphone" maxLength="32"
+                            <span class="bg_text"><input type="text" id="phone" name="phone" maxLength="32"
                                                          vld="{required:true}"/></span>
                             <span class="pos"><span class="tip warningTip">用户名为4-20位字母、数字或中文组成，字母区分大小写。</span></span>
                         </li>
                         <li>
                             <label for="statusAddr">&nbsp;</label>
-                            <span><input type="checkbox" name="statusAddr"/>设为默认收货地址</span>
+                            <span><input type="checkbox" name="defaultAddr" id="defaultAddr" value="1"/>设为默认收货地址</span>
                         </li>
                         <li><label for="">&nbsp;</label><input type="submit" value="保存" class="hand btn66x23"/></li>
                     </ul>

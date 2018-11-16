@@ -1,7 +1,9 @@
 package com.xiepanpan.ecps.controller;
 
+import com.xiepanpan.ecps.model.EbArea;
 import com.xiepanpan.ecps.model.EbShipAddr;
 import com.xiepanpan.ecps.model.TsPtlUser;
+import com.xiepanpan.ecps.service.EbAreaService;
 import com.xiepanpan.ecps.service.EbShipAddrService;
 import com.xiepanpan.ecps.service.TsPtlUserService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
@@ -40,6 +42,8 @@ public class EbUserController {
     private TsPtlUserService tsPtlUserService;
     @Autowired
     private EbShipAddrService ebShipAddrService;
+    @Autowired
+    private EbAreaService ebAreaService;
 
     /**
      *  跳转到登录界面
@@ -173,6 +177,45 @@ public class EbUserController {
         TsPtlUser user = (TsPtlUser) session.getAttribute("user");
         List<EbShipAddr> ebShipAddrList = ebShipAddrService.selectAddrByUserId(user.getPtlUserId());
         model.addAttribute("ebShipAddrList",ebShipAddrList);
+        List<EbArea> ebAreaList = ebAreaService.selectAreaByPid(0L);
+        model.addAttribute("ebAreaList",ebAreaList);
         return "person/deliverAddress";
+    }
+
+    /**
+     * 根据父节点Id查询所有节点
+     * @param areaId
+     * @param response
+     */
+    @RequestMapping("/login/getChildArea.do")
+    public void getChildArea(Long areaId,HttpServletResponse response) {
+        List<EbArea> ebAreaList = ebAreaService.selectAreaByPid(areaId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("ebAreaList",ebAreaList);
+        String result = jsonObject.toString();
+        ECPSUtils.printAjax(response,result);
+    }
+
+    /**
+     * 根据收货地址主键查询收货信息
+     */
+    @RequestMapping("/login/getAddrById.do")
+    public void getAddrById(Long shipAddrId,HttpServletResponse response) {
+        EbShipAddr ebShipAddr = ebShipAddrService.selectAddrById(shipAddrId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("ebShipAddr",ebShipAddr);
+        String result = jsonObject.toString();
+        ECPSUtils.printAjax(response,result);
+    }
+
+    @RequestMapping("/login/saveOrUpdateAddr.do")
+    public String saveOrUpdateAddr(EbShipAddr ebShipAddr,HttpSession session){
+        TsPtlUser user = (TsPtlUser) session.getAttribute("user");
+        ebShipAddr.setPtlUserId(user.getPtlUserId());
+        if (ebShipAddr.getDefaultAddr()==null) {
+            ebShipAddr.setDefaultAddr((short) 0);
+        }
+        ebShipAddrService.saveOrUpdateAddr(ebShipAddr);
+        return "redirect:listAddr.do";
     }
 }

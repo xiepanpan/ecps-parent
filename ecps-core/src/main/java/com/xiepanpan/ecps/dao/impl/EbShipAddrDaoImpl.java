@@ -23,4 +23,24 @@ public class EbShipAddrDaoImpl extends SqlSessionDaoSupport implements EbShipAdd
     public List<EbShipAddr> selectAddrByUserId(Long userId) {
         return this.getSqlSession().selectList(ns+"selectAddrByUserId",userId);
     }
+
+    @Override
+    public EbShipAddr selectAddrById(Long addrId) {
+        return this.getSqlSession().selectOne(ns+"selectByPrimaryKey",addrId);
+    }
+
+    @Override
+    public void saveAddr(EbShipAddr ebShipAddr) {
+        this.getSqlSession().insert(ns+"insert",ebShipAddr);
+    }
+
+    @Override
+    public void updateAddr(EbShipAddr ebShipAddr) {
+        this.getSqlSession().update(ns+"updateByPrimaryKeySelective",ebShipAddr);
+    }
+
+    @Override
+    public void updateDefaultAddr(Long userId) {
+        this.getSqlSession().update(ns+"updateDefaultAddr",userId);
+    }
 }

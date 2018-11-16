@@ -20,5 +20,26 @@ public interface EbShipAddrDao {
      */
     public List<EbShipAddr> selectAddrByUserId(Long userId);
 
+    /**
+     * 根据收货地址主键查询收货信息
+     * @param addrId
+     * @return
+     */
+    public EbShipAddr selectAddrById(Long addrId);
+
+    /**
+     * 新增收货地址信息
+     * @param ebShipAddr
+     */
+    public void saveAddr(EbShipAddr ebShipAddr);
+
+    /**
+     * 更新收货地址信息
+     * @param ebShipAddr
+     */
+    public void updateAddr(EbShipAddr ebShipAddr);
+
+    public void updateDefaultAddr(Long userId);
+
 
 }

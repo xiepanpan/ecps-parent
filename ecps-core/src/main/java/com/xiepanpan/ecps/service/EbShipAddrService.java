@@ -21,4 +21,17 @@ public interface EbShipAddrService {
      */
     public List<EbShipAddr> selectAddrByUserId(Long userId);
 
+    /**
+     * 根据收货地址主键查询收货信息
+     * @param addrId
+     * @return
+     */
+    public EbShipAddr selectAddrById(Long addrId);
+
+    /**
+     * 保存或更新地址信息
+     * @param ebShipAddr
+     */
+    public void saveOrUpdateAddr(EbShipAddr ebShipAddr);
+
 }
