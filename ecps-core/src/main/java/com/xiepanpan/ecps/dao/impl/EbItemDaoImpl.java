@@ -53,4 +53,9 @@ public class EbItemDaoImpl extends SqlSessionDaoSupport implements EbItemDao {
     public List<EbItem> selectIsSelectItemList() {
         return this.getSqlSession().selectList(ns+"selectIsSelectItemList");
     }
+
+    @Override
+    public EbItem selectItemDetailById(Long itemId) {
+        return this.getSqlSession().selectOne(ns+"selectItemDetailById",itemId);
+    }
 }

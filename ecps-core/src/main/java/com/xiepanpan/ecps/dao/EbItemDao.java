@@ -28,5 +28,12 @@ public interface EbItemDao {
 
     public List<EbItem> selectIsSelectItemList();
 
+    /**
+     * 根据商品Id查询商品详情信息
+     * @param itemId
+     * @return
+     */
+    public EbItem selectItemDetailById(Long itemId);
+
 
 }

@@ -42,4 +42,11 @@ public interface EbItemService {
      * @return
      */
     public List<EbItem> listItemByIndex(String price,Long brandId,String keyWords,String paraVals) throws Exception;
+
+    /**
+     * 根据商品Id查询商品详情信息
+     * @param itemId
+     * @return
+     */
+    public EbItem selectItemDetailById(Long itemId);
 }

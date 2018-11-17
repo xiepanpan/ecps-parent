@@ -207,4 +207,9 @@ public class EbItemServiceImpl implements EbItemService {
 
         return ebItemList;
     }
+
+    @Override
+    public EbItem selectItemDetailById(Long itemId) {
+        return ebItemDao.selectItemDetailById(itemId);
+    }
 }

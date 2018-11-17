@@ -503,25 +503,25 @@
             resultMap="BaseResultMap">
         select *
         from (
-            select rownum rn, a.*
-            from (
-            select * from eb_item t
-            <where>
-                <if test="brandId!=null">
-                    t.brand_id=#{brandId}
-                </if>
-                <if test="auditStatus!=null">
-                    and t.audit_status=#{auditStatus}
-                </if>
-                <if test="showStatus!=null">
-                    and t.show_status=#{showStatus}
-                </if>
-                <if test="itemName!=null and itemName!=''">
-                    and t.item_name like '%${itemName}%'
-                </if>
-            </where>
-            order by t.item_id desc
-            ) a
+        select rownum rn, a.*
+        from (
+        select * from eb_item t
+        <where>
+            <if test="brandId!=null">
+                t.brand_id=#{brandId}
+            </if>
+            <if test="auditStatus!=null">
+                and t.audit_status=#{auditStatus}
+            </if>
+            <if test="showStatus!=null">
+                and t.show_status=#{showStatus}
+            </if>
+            <if test="itemName!=null and itemName!=''">
+                and t.item_name like '%${itemName}%'
+            </if>
+        </where>
+        order by t.item_id desc
+        ) a
         <![CDATA[
             where rownum < #{endNum}) b
         where b.rn > #{startNum}
@@ -551,10 +551,10 @@
     <resultMap type="com.xiepanpan.ecps.model.EbItem" id="selectIsSelectItemListRM" extends="BaseResultMap">
         <result column="sku_price" property="skuPrice"/>
         <collection property="paraList" ofType="com.xiepanpan.ecps.model.EbParaValue">
-            <id column="PARA_ID" property="paraId" jdbcType="DECIMAL" />
-            <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
-            <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL" />
-            <result column="PARA_VALUE" property="paraValue" jdbcType="VARCHAR" />
+            <id column="PARA_ID" property="paraId" jdbcType="DECIMAL"/>
+            <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL"/>
+            <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL"/>
+            <result column="PARA_VALUE" property="paraValue" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
     <!--solr索引sql -->
@@ -607,5 +607,69 @@
    and ev.feature_id = ef.feature_id
    and ef.is_select = 1
 
+    </select>
+
+    <resultMap id="selectItemDetailByIdRM" type="com.xiepanpan.ecps.model.EbItem" extends="BaseResultMap">
+        <!--一对一-->
+        <association property="ebItemClob" javaType="com.xiepanpan.ecps.model.EbItemClob">
+            <id column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
+            <result column="ITEM_DESC" property="itemDesc" jdbcType="CLOB" />
+            <result column="PACKING_LIST" property="packingList" jdbcType="CLOB" />
+        </association>
+        <!--一对多-->
+        <collection property="paraList" ofType="com.xiepanpan.ecps.model.EbParaValue">
+            <id column="PARA_ID" property="paraId" jdbcType="DECIMAL" />
+            <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
+            <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL" />
+            <result column="PARA_VALUE" property="paraValue" jdbcType="VARCHAR" />
+            <result column="FEATURE_NAME" property="featureName" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="ebSkuList" ofType="com.xiepanpan.ecps.model.EbSku">
+            <id column="SKU_ID" property="skuId" jdbcType="DECIMAL" />
+            <result column="ITEM_ID" property="itemId" jdbcType="DECIMAL" />
+            <result column="SKU" property="sku" jdbcType="VARCHAR" />
+            <result column="SKU_PRICE" property="skuPrice" jdbcType="DECIMAL" />
+            <result column="SHOW_STATUS" property="showStatus" jdbcType="DECIMAL" />
+            <result column="STOCK_INVENTORY" property="stockInventory" jdbcType="DECIMAL" />
+            <result column="SKU_UPPER_LIMIT" property="skuUpperLimit" jdbcType="DECIMAL" />
+            <result column="LOCATION" property="location" jdbcType="VARCHAR" />
+            <result column="SKU_IMG" property="skuImg" jdbcType="VARCHAR" />
+            <result column="SKU_SORT" property="skuSort" jdbcType="DECIMAL" />
+            <result column="SKU_NAME" property="skuName" jdbcType="VARCHAR" />
+            <result column="MARKET_PRICE" property="marketPrice" jdbcType="DECIMAL" />
+            <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+            <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+            <result column="CREATE_USER_ID" property="createUserId" jdbcType="DECIMAL" />
+            <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="DECIMAL" />
+            <result column="ORIGINAL_SKU_ID" property="originalSkuId" jdbcType="DECIMAL" />
+            <result column="LAST_STATUS" property="lastStatus" jdbcType="DECIMAL" />
+            <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
+            <result column="SKU_TYPE" property="skuType" jdbcType="DECIMAL" />
+            <result column="SALES" property="sales" jdbcType="DECIMAL" />
+            <result column="RES_CODE" property="resCode" jdbcType="VARCHAR" />
+            <result column="PACK_ID" property="packId" jdbcType="DECIMAL" />
+            <collection property="ebSpecValueList" ofType="com.xiepanpan.ecps.model.EbSpecValue">
+                <id column="SPEC_ID" property="specId" jdbcType="DECIMAL" />
+                <result column="SKU_ID" property="skuId" jdbcType="DECIMAL" />
+                <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL" />
+                <result column="SPEC_VALUE" property="specValue" jdbcType="VARCHAR" />
+            </collection>
+        </collection>
+    </resultMap>
+    <!--商品详情页面-->
+    <select id="selectItemDetailById" parameterType="long" resultMap="selectItemDetailByIdRM">
+        select *
+  from eb_item       ei,
+       eb_para_value ep,
+       eb_item_clob  ec,
+       eb_sku        es,
+       eb_spec_value ev,
+       eb_feature    ef
+ where ei.item_id = ec.item_id
+   and ei.item_id = ep.item_id
+   and ei.item_id = es.item_id
+   and es.sku_id = ev.sku_id(+)
+   and ep.feature_id = ef.feature_id
+   and ei.item_id = #{itemId}
     </select>
 </mapper>

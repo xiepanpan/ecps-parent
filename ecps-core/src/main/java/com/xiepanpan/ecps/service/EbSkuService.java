@@ -1,20 +1,15 @@
-package com.xiepanpan.ecps.dao;
+package com.xiepanpan.ecps.service;
 
-
-import com.xiepanpan.ecps.model.EbParaValue;
 import com.xiepanpan.ecps.model.EbSku;
 
-import java.util.List;
 
 /**
- * describe: 商品最小销售单元dao层
+ * describe: 最小销售单元业务层
  *
  * @author xiepanpan
  * @date 2018/10/31
  */
-public interface EbSkuDao {
-
-    public void saveSku(List<EbSku> ebSkuList, Long itemId);
+public interface EbSkuService {
 
     /**
      * 根据最小销售单元id查询最小销售单元信息
@@ -22,6 +17,5 @@ public interface EbSkuDao {
      * @return
      */
     public EbSku getSkuById(Long skuId);
-
 
 }
