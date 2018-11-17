@@ -3,14 +3,20 @@ package com.xiepanpan.ecps.controller;
 import com.xiepanpan.ecps.model.EbBrand;
 import com.xiepanpan.ecps.model.EbFeature;
 import com.xiepanpan.ecps.model.EbItem;
+import com.xiepanpan.ecps.model.EbSku;
 import com.xiepanpan.ecps.service.EbBrandService;
 import com.xiepanpan.ecps.service.EbFeatureService;
 import com.xiepanpan.ecps.service.EbItemService;
+import com.xiepanpan.ecps.service.EbSkuService;
+import com.xiepanpan.ecps.utils.ECPSUtils;
+import net.sf.json.JSONObject;
+import org.apache.xpath.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -29,6 +35,8 @@ public class EbItemController {
     private EbFeatureService ebFeatureService;
     @Autowired
     private EbItemService ebItemService;
+    @Autowired
+    private EbSkuService ebSkuService;
 
     /**
      * 跳转到首页
@@ -58,5 +66,22 @@ public class EbItemController {
         List<EbItem> ebItemList = ebItemService.listItemByIndex(price, brandId, keyWords, paraVals);
         model.addAttribute("ebItemList",ebItemList);
         return "phoneClassification";
+    }
+
+
+    @RequestMapping("/viewItemDetail.do")
+    public String viewItemDetail(Long itemId, Model model) {
+        EbItem ebItem = ebItemService.selectItemDetailById(itemId);
+        model.addAttribute("ebItem",ebItem);
+        return "productDetail";
+    }
+
+    @RequestMapping("/getSkuById.do")
+    public void getSkuById(Long skuId, HttpServletResponse response) {
+        EbSku ebSku = ebSkuService.getSkuById(skuId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.accumulate("ebSku",ebSku);
+        String result = jsonObject.toString();
+        ECPSUtils.printAjax(response,result);
     }
 }

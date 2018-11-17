@@ -73,7 +73,7 @@ $(function () {
         var notes = $("#itemNote").val();
         $("#notes").val(notes);
         //提交表单
-        $("#showForm").submit();
+        $("#auditForm").submit();
     });
 })
 
