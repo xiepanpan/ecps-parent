@@ -30,6 +30,8 @@ public class EbBrandServiceImplTest {
     EbIndexService ebIndexService;
     @Autowired
     EbItemService ebItemService;
+    @Autowired
+    EbRedisService ebRedisService;
 
     /**
      * 测试品牌保存
@@ -68,5 +70,10 @@ public class EbBrandServiceImplTest {
         map.put("path","http://localhost:8083/ecps-portal");
         map.put("request_file_path","http://localhost:8092/ecps-file");
         FMutil.ouputFile("productDetail.ftl",ebItem.getItemId()+".html",map);
+    }
+
+    @Test
+    public void importEbSkuToRedis(){
+        ebRedisService.importEbSkuToRedis();
     }
 }

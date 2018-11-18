@@ -78,7 +78,8 @@ public class EbItemController {
 
     @RequestMapping("/getSkuById.do")
     public void getSkuById(Long skuId, HttpServletResponse response) {
-        EbSku ebSku = ebSkuService.getSkuById(skuId);
+//        EbSku ebSku = ebSkuService.getSkuById(skuId);
+        EbSku ebSku = ebSkuService.getSkuByIdFromRedis(skuId);
         JSONObject jsonObject = new JSONObject();
         jsonObject.accumulate("ebSku",ebSku);
         String result = jsonObject.toString();

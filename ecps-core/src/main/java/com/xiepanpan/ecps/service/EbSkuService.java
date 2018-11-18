@@ -18,4 +18,11 @@ public interface EbSkuService {
      */
     public EbSku getSkuById(Long skuId);
 
+    /**
+     * 从redis中根据最小销售单元id查询最小销售单元信息
+     * @param skuId
+     * @return
+     */
+    public EbSku getSkuByIdFromRedis(Long skuId);
+
 }

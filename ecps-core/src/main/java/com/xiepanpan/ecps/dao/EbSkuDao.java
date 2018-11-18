@@ -23,5 +23,7 @@ public interface EbSkuDao {
      */
     public EbSku getSkuById(Long skuId);
 
+    public List<EbSku> selectSkuList();
+
 
 }

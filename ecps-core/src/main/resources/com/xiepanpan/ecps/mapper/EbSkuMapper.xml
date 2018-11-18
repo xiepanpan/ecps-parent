@@ -341,4 +341,17 @@
       PACK_ID = #{packId,jdbcType=DECIMAL}
     where SKU_ID = #{skuId,jdbcType=DECIMAL}
   </update>
+
+  <select id="selectSkuList" resultMap="BaseResultMap">
+    select *
+    from (select es.*
+    from eb_item ei, eb_sku es
+    where ei.show_status = 0
+    and ei.audit_status = 1
+    and ei.item_id = es.item_id
+    order by es.sku_id desc) a
+    <![CDATA[
+    where rownum < 11
+    ]]>
+  </select>
 </mapper>
