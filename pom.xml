@@ -37,10 +37,17 @@
         <jdbc.groupId>com.oracle</jdbc.groupId>
         <jdbc.artifactId>ojdbc14</jdbc.artifactId>
         <jdbc.version>10.2.0.2.0</jdbc.version>
+        <jedis.version>2.7.2</jedis.version>
         <jdbc.driverClassName>oracle.jdbc.OracleDriver</jdbc.driverClassName>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <!-- Redis客户端 -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${jdbc.groupId}</groupId>
                 <artifactId>${jdbc.artifactId}</artifactId>

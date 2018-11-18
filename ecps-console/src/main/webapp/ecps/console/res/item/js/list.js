@@ -79,3 +79,24 @@ function isShow(itemId, showStatus) {
     $("#showStatus1").val(showStatus);
     tipShow("#addItemNote");
 }
+
+function publish(itemId) {
+    //遮罩
+    tipShow("#refundLoadDiv");
+    $.ajax({
+        url:path+"/item/publishItem.do",
+        type:"post",
+        dataType:"text",
+        data:{
+            itemId:itemId
+        },
+        success:function (data) {
+            if (data=="success") {
+                alert("发布成功");
+            }else {
+                alert("发布失败");
+            }
+            tipHide("#refundLoadDiv");
+        }
+    })
+}

@@ -24,6 +24,11 @@
             <artifactId>${jdbc.artifactId}</artifactId>
             <version>${jdbc.version}</version>
         </dependency>
+        <!-- Redis客户端 -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock</artifactId>

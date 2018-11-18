@@ -49,4 +49,12 @@ public interface EbItemService {
      * @return
      */
     public EbItem selectItemDetailById(Long itemId);
+
+    /**
+     * 发布商品
+     * @param itemId
+     * @param password
+     * @return
+     */
+    public String publishItem(Long itemId,String password);
 }

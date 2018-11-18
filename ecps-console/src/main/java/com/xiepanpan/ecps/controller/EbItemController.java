@@ -4,6 +4,7 @@ import com.xiepanpan.ecps.model.*;
 import com.xiepanpan.ecps.service.EbBrandService;
 import com.xiepanpan.ecps.service.EbFeatureService;
 import com.xiepanpan.ecps.service.EbItemService;
+import com.xiepanpan.ecps.utils.ECPSUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -268,6 +270,17 @@ public class EbItemController {
             flag="0";
         }
         return "redirect:listItem.do?showStatus="+flag+"&auditStatus=1";
+    }
+
+    /**
+     * 发布商品
+     * @param itemId
+     * @param printWriter
+     */
+    @RequestMapping("/publishItem.do")
+    public void publishItem(Long itemId, PrintWriter printWriter) {
+        String result = ebItemService.publishItem(itemId, ECPSUtils.readProp("ws_pwd"));
+        printWriter.write(result);
     }
 
 }

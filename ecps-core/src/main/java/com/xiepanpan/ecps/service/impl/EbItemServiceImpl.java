@@ -3,6 +3,8 @@ package com.xiepanpan.ecps.service.impl;
 import com.xiepanpan.ecps.dao.*;
 import com.xiepanpan.ecps.model.*;
 import com.xiepanpan.ecps.service.EbItemService;
+import com.xiepanpan.ecps.stub.EbWSItemService;
+import com.xiepanpan.ecps.stub.EbWSItemServiceService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -211,5 +213,13 @@ public class EbItemServiceImpl implements EbItemService {
     @Override
     public EbItem selectItemDetailById(Long itemId) {
         return ebItemDao.selectItemDetailById(itemId);
+    }
+
+    @Override
+    public String publishItem(Long itemId, String password) {
+        //创建的服务访问点集合的对象
+        EbWSItemServiceService ebWSItemServiceService = new EbWSItemServiceService();
+        EbWSItemService ebWSItemService = ebWSItemServiceService.getEbWSItemServicePort();
+        return ebWSItemService.publishItem(itemId,password);
     }
 }

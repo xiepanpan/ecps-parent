@@ -1,11 +1,16 @@
 package com.xiepanpan.ecps.service;
 
 import com.xiepanpan.ecps.model.EbBrand;
+import com.xiepanpan.ecps.model.EbItem;
+import com.xiepanpan.ecps.utils.FMutil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -23,6 +28,8 @@ public class EbBrandServiceImplTest {
     EbBrandService ebBrandService;
     @Autowired
     EbIndexService ebIndexService;
+    @Autowired
+    EbItemService ebItemService;
 
     /**
      * 测试品牌保存
@@ -48,5 +55,18 @@ public class EbBrandServiceImplTest {
     @Test
     public void importIndexTest() throws Exception {
         ebIndexService.importIndex();
+    }
+
+    /**
+     * freemarker生成html文件测试
+     */
+    @Test
+    public void testGenerateStaticPage() throws Exception {
+        EbItem ebItem = ebItemService.selectItemDetailById((long) 3100);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("ebItem",ebItem);
+        map.put("path","http://localhost:8083/ecps-portal");
+        map.put("request_file_path","http://localhost:8092/ecps-file");
+        FMutil.ouputFile("productDetail.ftl",ebItem.getItemId()+".html",map);
     }
 }
