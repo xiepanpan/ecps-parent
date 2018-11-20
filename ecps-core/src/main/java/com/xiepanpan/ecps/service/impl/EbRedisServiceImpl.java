@@ -2,6 +2,7 @@ package com.xiepanpan.ecps.service.impl;
 
 import com.xiepanpan.ecps.dao.EbSkuDao;
 import com.xiepanpan.ecps.model.EbSku;
+import com.xiepanpan.ecps.model.EbSpecValue;
 import com.xiepanpan.ecps.service.EbRedisService;
 import com.xiepanpan.ecps.service.EbSkuService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
@@ -26,7 +27,9 @@ public class EbRedisServiceImpl implements EbRedisService {
     @Override
     public void importEbSkuToRedis() {
         Jedis jedis = new Jedis(ECPSUtils.readProp("redis_ip"), Integer.parseInt(ECPSUtils.readProp("redis_port")),100000);
-        List<EbSku> ebSkuList = ebSkuDao.selectSkuList();
+//        List<EbSku> ebSkuList = ebSkuDao.selectSkuList();
+          List<EbSku> ebSkuList = ebSkuDao.selectSkuDetailList();
+
         for (EbSku ebSku: ebSkuList) {
             jedis.lpush("ebSkuList",ebSku.getSkuId()+"");
             jedis.hset("ebSku:"+ebSku.getSkuId(),"skuId",ebSku.getSkuId()+"");
@@ -34,6 +37,19 @@ public class EbRedisServiceImpl implements EbRedisService {
             jedis.hset("ebSku:"+ebSku.getSkuId(),"skuPrice",ebSku.getSkuPrice()+"");
             jedis.hset("ebSku:"+ebSku.getSkuId(),"stockInventory",ebSku.getStockInventory()+"");
             jedis.hset("ebSku:"+ebSku.getSkuId(),"marketPrice",ebSku.getMarketPrice()+"");
+            //同步商品信息
+            jedis.hset("ebSku:"+ebSku.getSkuId()+":ebItem:"+ebSku.getEbItem().getItemId(),"itemId",ebSku.getEbItem().getItemId()+"");
+            jedis.hset("ebSku:"+ebSku.getSkuId()+":ebItem:"+ebSku.getEbItem().getItemId(),"itemName",ebSku.getEbItem().getItemName()+"");
+            jedis.hset("ebSku:"+ebSku.getSkuId()+":ebItem:"+ebSku.getEbItem().getItemId(),"itemNo",ebSku.getEbItem().getItemNo()+"");
+            jedis.hset("ebSku:"+ebSku.getSkuId()+":ebItem:"+ebSku.getEbItem().getItemId(),"imgs",ebSku.getEbItem().getImgs()+"");
+            //规格信息同步
+            for (EbSpecValue ebSpecValue:ebSku.getEbSpecValueList()) {
+                //存放规格id集合
+                jedis.lpush("ebSku:"+ebSku.getSkuId()+":ebSpecValueList",ebSpecValue.getSpecId()+"");
+                jedis.hset("ebSku:"+ebSku.getSkuId()+":ebSpecValue:"+ebSpecValue.getSpecId(),"specId",ebSpecValue.getSpecId()+"");
+                jedis.hset("ebSku:"+ebSku.getSkuId()+":ebSpecValue:"+ebSpecValue.getSpecId(),"skuId",ebSpecValue.getSkuId()+"");
+                jedis.hset("ebSku:"+ebSku.getSkuId()+":ebSpecValue:"+ebSpecValue.getSpecId(),"specValue",ebSpecValue.getSpecValue()+"");
+            }
         }
     }
 }

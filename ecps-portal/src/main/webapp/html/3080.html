@@ -206,7 +206,43 @@
         }
 
         function addCart() {
-            window.location.href = "./shop/car.jsp";
+            //取选中的skuId
+            var skuId = null;
+            $(".spec a").each(function () {
+                if ($(this).attr("class")=="here") {
+                    skuId=$(this).attr("skuId");
+                }
+            })
+            //获得购买的数量
+            var quantity = parseInt($("#quantity").val());
+            if(validSkuStock(skuId,quantity)){
+                window.location.href = "http://localhost:8083/ecps-portal/cart/addCart.do?skuId="+skuId+"&quantity="+quantity;;
+            }else {
+                alert("库存不足");
+            }
+        }
+        function validSkuStock(skuId,quantity) {
+            //默认库存足够
+            var result = true;
+            $.ajax({
+                url:"http://localhost:8083/ecps-portal/item/getSkuById.do",
+                type:"post",
+                async:false,
+                dataType:"text",
+                data:{
+                    skuId:skuId,quantity:quantity
+                },
+                success:function (data) {
+                    var jsonObj = $.parseJSON(data);
+                    if (jsonObj.ebSku.stockInventory<quantity){
+                        result=false;
+                    }
+                },
+                error:function () {
+                    alert("库存校验错误");
+                }
+            })
+            return result;
         }
     </script>
 </head>
@@ -442,7 +478,7 @@
     <p class="l"><a href="#" title="商城首页">商城首页</a><samp>|</samp><a href="#" title="我的商城">我的商城</a></p>
 
     <dl id="cart" class="cart l">
-        <dt><a href="#" title="结算">结算</a>购物车:<b id="">123</b>件</dt>
+        <dt><a href="http://localhost:8083/ecps-portal/cart/listCart.do" title="结算">结算</a>购物车:<b id="">123</b>件</dt>
         <dd class="hidden">
             <p class="alg_c hidden">购物车中还没有商品，赶紧选购吧！</p>
             <h3 title="最新加入的商品">最新加入的商品</h3>
@@ -777,22 +813,18 @@
                         <li><label>规　　格：</label>
                             <div class="pre spec">
                                             <a href="javascript:void(0);" class="here" skuId="3080" >
-                                                64G
                                                 金色
+                                                64G
                                             </a>
                             </div>
                         </li>
-                        <li><label>我 要 买：</label><a href="javascript:void(0);" class="inb sub"></a><input readonly
-                                                                                                          type="text"
-                                                                                                          name=""
-                                                                                                          value="1"
-                                                                                                          class="num"
-                                                                                                          size="3"/><a
-                                href="javascript:void(0);" class="inb add"></a><em id="sub_add_msg" class="red"></em>
+                        <li><label>我 要 买：</label><a href="javascript:void(0);" class="inb sub"></a>
+                            <input readonly type="text" name="" id ="quantity" value="1" class="num" size="3"/>
+                            <a href="javascript:void(0);" class="inb add"></a><em id="sub_add_msg" class="red"></em>
                         </li>
                         <li class="submit">
                             <input type="button" id="buyNow" value="" class="hand btn138x40" onclick="buy();"/>
-                            <input type="button" id="addCart" value="" class="hand btn138x40b" onclick="addCart()"/>
+                            <input type="button" id="addMyCart" value="" class="hand btn138x40b" onclick="addCart()"/>
                             <a href="#" title="加入收藏" class="inb fav">加入收藏</a>
                         </li>
 

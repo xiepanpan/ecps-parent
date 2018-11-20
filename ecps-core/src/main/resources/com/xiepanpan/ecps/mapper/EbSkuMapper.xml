@@ -342,6 +342,7 @@
     where SKU_ID = #{skuId,jdbcType=DECIMAL}
   </update>
 
+  <!--查库存-->
   <select id="selectSkuList" resultMap="BaseResultMap">
     select *
     from (select es.*
@@ -353,5 +354,59 @@
     <![CDATA[
     where rownum < 11
     ]]>
+  </select>
+  <resultMap id="selectSkuDetailListRM" type="com.xiepanpan.ecps.model.EbSku" extends="BaseResultMap">
+      <association property="ebItem" javaType="com.xiepanpan.ecps.model.EbItem">
+        <id column="ITEM_ID" property="itemId" jdbcType="DECIMAL"/>
+        <result column="ITEM_NAME" property="itemName" jdbcType="VARCHAR"/>
+        <result column="ITEM_NO" property="itemNo" jdbcType="VARCHAR"/>
+        <result column="BRAND_ID" property="brandId" jdbcType="DECIMAL"/>
+        <result column="CAT_ID" property="catId" jdbcType="DECIMAL"/>
+        <result column="TAG_IMG_ID" property="tagImgId" jdbcType="DECIMAL"/>
+        <result column="TAG_IMG" property="tagImg" jdbcType="DECIMAL"/>
+        <result column="IS_NEW" property="isNew" jdbcType="DECIMAL"/>
+        <result column="IS_GOOD" property="isGood" jdbcType="DECIMAL"/>
+        <result column="IS_HOT" property="isHot" jdbcType="DECIMAL"/>
+        <result column="PROMOTION" property="promotion" jdbcType="VARCHAR"/>
+        <result column="AUDIT_STATUS" property="auditStatus" jdbcType="DECIMAL"/>
+        <result column="SHOW_STATUS" property="showStatus" jdbcType="DECIMAL"/>
+        <result column="IMGS" property="imgs" jdbcType="VARCHAR"/>
+        <result column="KEYWORDS" property="keywords" jdbcType="VARCHAR"/>
+        <result column="PAGE_DESC" property="pageDesc" jdbcType="VARCHAR"/>
+        <result column="ITEM_RECYCLE" property="itemRecycle" jdbcType="DECIMAL"/>
+        <result column="ON_SALE_TIME" property="onSaleTime" jdbcType="TIMESTAMP"/>
+        <result column="CHECK_TIME" property="checkTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_USER_ID" property="updateUserId" jdbcType="DECIMAL"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="CHECKER_USER_ID" property="checkerUserId" jdbcType="DECIMAL"/>
+        <result column="FULL_PATH_DEPLOY" property="fullPathDeploy" jdbcType="VARCHAR"/>
+        <result column="FULL_PATH_DEPLOY_OFFER" property="fullPathDeployOffer" jdbcType="VARCHAR"/>
+        <result column="ORIGINAL_ITEM_ID" property="originalItemId" jdbcType="DECIMAL"/>
+        <result column="LAST_STATUS" property="lastStatus" jdbcType="DECIMAL"/>
+        <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL"/>
+        <result column="ITEM_SORT" property="itemSort" jdbcType="DECIMAL"/>
+        <result column="SALES" property="sales" jdbcType="DECIMAL"/>
+        <result column="CREATE_USER_ID" property="createUserId" jdbcType="DECIMAL"/>
+        <result column="SIM_LEVEL" property="simLevel" jdbcType="DECIMAL"/>
+        <result column="GIFT_DESC" property="giftDesc" jdbcType="VARCHAR"/>
+        <result column="GIFT_IMG" property="giftImg" jdbcType="VARCHAR"/>
+        <result column="GIFT_SHOW_TYPE" property="giftShowType" jdbcType="VARCHAR"/>
+        <result column="IMG_SIZE1" property="imgSize1" jdbcType="VARCHAR"/>
+      </association>
+      <collection property="ebSpecValueList" ofType="com.xiepanpan.ecps.model.EbSpecValue">
+          <id column="SPEC_ID" property="specId" jdbcType="DECIMAL" />
+          <result column="SKU_ID" property="skuId" jdbcType="DECIMAL" />
+          <result column="FEATURE_ID" property="featureId" jdbcType="DECIMAL" />
+          <result column="SPEC_VALUE" property="specValue" jdbcType="VARCHAR" />
+      </collection>
+  </resultMap>
+  <select id="selectSkuDetailList" resultMap="selectSkuDetailListRM">
+    select *
+  from eb_sku es, eb_item ei, eb_spec_value ev
+ where es.item_id = ei.item_id
+    and ei.show_status=0
+    and ei.audit_status=1
+   and es.sku_id = ev.sku_id(+)
   </select>
 </mapper>

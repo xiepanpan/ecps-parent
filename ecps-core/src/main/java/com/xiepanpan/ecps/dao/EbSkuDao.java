@@ -25,5 +25,7 @@ public interface EbSkuDao {
 
     public List<EbSku> selectSkuList();
 
+    public List<EbSku> selectSkuDetailList();
+
 
 }

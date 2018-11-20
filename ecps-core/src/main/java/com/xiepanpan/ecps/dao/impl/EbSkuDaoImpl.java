@@ -48,4 +48,10 @@ public class EbSkuDaoImpl extends SqlSessionDaoSupport implements EbSkuDao {
     public List<EbSku> selectSkuList() {
         return this.getSqlSession().selectList(ns+"selectSkuList");
     }
+
+    @Override
+    public List<EbSku> selectSkuDetailList() {
+
+        return this.getSqlSession().selectList(ns+"selectSkuDetailList");
+    }
 }

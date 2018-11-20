@@ -1,12 +1,15 @@
 package com.xiepanpan.ecps.service.impl;
 
 import com.xiepanpan.ecps.model.EbCart;
+import com.xiepanpan.ecps.model.EbSku;
 import com.xiepanpan.ecps.service.EbCartService;
+import com.xiepanpan.ecps.service.EbSkuService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
@@ -25,6 +28,10 @@ import java.util.List;
  **/
 @Service
 public class EbCartServiceImpl implements EbCartService{
+
+    @Autowired
+    private EbSkuService ebSkuService;
+
     @Override
     public void addCart(HttpServletRequest request, HttpServletResponse response, Long skuId, Integer quantity) {
         Cookie[] cookies = request.getCookies();
@@ -86,7 +93,34 @@ public class EbCartServiceImpl implements EbCartService{
 
     @Override
     public List<EbCart> selectCartList(HttpServletRequest request, HttpServletResponse response) {
-        return null;
+        Cookie[] cookies = request.getCookies();
+        List<EbCart> ebCartList= new ArrayList<EbCart>();
+        //json数组转java对象
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(EbCart.class);
+        //排除属性 不不需要转
+        jsonConfig.setExcludes(new String[]{"ebSku"});
+        if (cookies!=null&&cookies.length>0) {
+            for (Cookie cookie:cookies) {
+                String cookieName = cookie.getName();
+                if (StringUtils.equals(cookieName, ECPSUtils.readProp("cart_key"))) {
+                    //获得购物车cookie中对应的值
+                    String cookieValue = cookie.getValue();
+                    //解码
+                    cookieValue = URLDecoder.decode(cookieValue);
+                    //字符串转json数组
+                    JSONArray jsonArray = JSONArray.fromObject(cookieValue);
+
+                    ebCartList = (List<EbCart>) JSONSerializer.toJava(jsonArray, jsonConfig);
+                    for (EbCart ebCart:ebCartList) {
+                        //从redis中取最小销售单元的详细信息
+                        EbSku ebSku = ebSkuService.getSkuDetailByIdFromRedis(ebCart.getSkuId());
+                        ebCart.setEbSku(ebSku);
+                    }
+                }
+            }
+        }
+        return ebCartList;
     }
 
     @Override
