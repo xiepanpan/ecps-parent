@@ -21,6 +21,14 @@ public interface EbCartService {
     public void addCart(HttpServletRequest request, HttpServletResponse response,Long skuId,Integer quantity);
 
     /**
+     * 移除购物车
+     * @param request
+     * @param response
+     * @param skuId
+     */
+    public void removeCart(HttpServletRequest request,HttpServletResponse response,Long skuId);
+
+    /**
      * 查询所有的购物车集合
      * @param request
      * @param response
@@ -33,9 +41,9 @@ public interface EbCartService {
      * @param request
      * @param response
      * @param skuId
-     * @param quantity
+     * @param modifyQuantity 购物车修改的数量
      */
-    public void modifyCart(HttpServletRequest request,HttpServletResponse response,Long skuId,Integer quantity);
+    public void modifyCart(HttpServletRequest request,HttpServletResponse response,Long skuId,Integer modifyQuantity);
 
     /**
      * 清空购物车
@@ -45,4 +53,12 @@ public interface EbCartService {
      * @param quantity
      */
     public void clearCart(HttpServletRequest request,HttpServletResponse response,Long skuId,Integer quantity);
+
+    /**
+     * 结算前校验购物车所有商品库存
+     * @param request
+     * @param response
+     * @return
+     */
+    public String validCart(HttpServletRequest request,HttpServletResponse response);
 }

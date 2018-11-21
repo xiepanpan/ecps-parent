@@ -2,6 +2,7 @@ package com.xiepanpan.ecps.service.impl;
 
 import com.xiepanpan.ecps.model.EbCart;
 import com.xiepanpan.ecps.model.EbSku;
+import com.xiepanpan.ecps.model.EbSpecValue;
 import com.xiepanpan.ecps.service.EbCartService;
 import com.xiepanpan.ecps.service.EbSkuService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
@@ -92,6 +93,49 @@ public class EbCartServiceImpl implements EbCartService{
     }
 
     @Override
+    public void removeCart(HttpServletRequest request, HttpServletResponse response, Long skuId) {
+        Cookie[] cookies = request.getCookies();
+        List<EbCart> ebCartList= new ArrayList<EbCart>();
+        //json数组转java对象
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(EbCart.class);
+        //排除属性 不不需要转
+        jsonConfig.setExcludes(new String[]{"ebSku"});
+        if (cookies!=null&&cookies.length>0) {
+            for (Cookie cookie:cookies) {
+                String cookieName = cookie.getName();
+                if (StringUtils.equals(cookieName, ECPSUtils.readProp("cart_key"))) {
+                    //获得购物车cookie中对应的值
+                    String cookieValue = cookie.getValue();
+                    //解码
+                    cookieValue = URLDecoder.decode(cookieValue);
+                    //字符串转json数组
+                    JSONArray jsonArray = JSONArray.fromObject(cookieValue);
+
+                    ebCartList = (List<EbCart>) JSONSerializer.toJava(jsonArray, jsonConfig);
+
+                    for (int i = 0; i <ebCartList.size() ; i++) {
+                        EbCart ebCart = ebCartList.get(i);
+                        if (ebCart.getSkuId().longValue()==skuId.longValue()) {
+                            ebCartList.remove(ebCart);
+                        }
+                    }
+                }
+            }
+        }
+        //写入cookie中
+        JSONArray jsonArray = JSONArray.fromObject(ebCartList, jsonConfig);
+        String result = jsonArray.toString();
+        //编码
+        result = URLEncoder.encode(result);
+        Cookie cookie = new Cookie("cookie_cart_key",result);
+        //路径 根目录
+        cookie.setPath("/");
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(cookie);
+    }
+
+    @Override
     public List<EbCart> selectCartList(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         List<EbCart> ebCartList= new ArrayList<EbCart>();
@@ -124,12 +168,87 @@ public class EbCartServiceImpl implements EbCartService{
     }
 
     @Override
-    public void modifyCart(HttpServletRequest request, HttpServletResponse response, Long skuId, Integer quantity) {
+    public void modifyCart(HttpServletRequest request, HttpServletResponse response, Long skuId, Integer modifyQuantity) {
+        Cookie[] cookies = request.getCookies();
+        List<EbCart> ebCartList= new ArrayList<EbCart>();
+        //json数组转java对象
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(EbCart.class);
+        //排除属性 不不需要转
+        jsonConfig.setExcludes(new String[]{"ebSku"});
+        if (cookies!=null&&cookies.length>0) {
+            for (Cookie cookie:cookies) {
+                String cookieName = cookie.getName();
+                if (StringUtils.equals(cookieName, ECPSUtils.readProp("cart_key"))) {
+                    //获得购物车cookie中对应的值
+                    String cookieValue = cookie.getValue();
+                    //解码
+                    cookieValue = URLDecoder.decode(cookieValue);
+                    //字符串转json数组
+                    JSONArray jsonArray = JSONArray.fromObject(cookieValue);
 
+                    ebCartList = (List<EbCart>) JSONSerializer.toJava(jsonArray, jsonConfig);
+                    for (EbCart ebCart:ebCartList) {
+                        if (ebCart.getSkuId().longValue()==skuId.longValue()) {
+                           ebCart.setQuantity(modifyQuantity);
+                        }
+                    }
+                }
+            }
+        }
+        //写入cookie中
+        JSONArray jsonArray = JSONArray.fromObject(ebCartList, jsonConfig);
+        String result = jsonArray.toString();
+        //编码
+        result = URLEncoder.encode(result);
+        Cookie cookie = new Cookie("cookie_cart_key",result);
+        //路径 根目录
+        cookie.setPath("/");
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(cookie);
     }
 
     @Override
     public void clearCart(HttpServletRequest request, HttpServletResponse response, Long skuId, Integer quantity) {
 
+    }
+
+    @Override
+    public String validCart(HttpServletRequest request, HttpServletResponse response) {
+        String result = "success";
+        Cookie[] cookies = request.getCookies();
+        List<EbCart> ebCartList= new ArrayList<EbCart>();
+        //json数组转java对象
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(EbCart.class);
+        //排除属性 不不需要转
+        jsonConfig.setExcludes(new String[]{"ebSku"});
+        if (cookies!=null&&cookies.length>0) {
+            for (Cookie cookie:cookies) {
+                String cookieName = cookie.getName();
+                if (StringUtils.equals(cookieName, ECPSUtils.readProp("cart_key"))) {
+                    //获得购物车cookie中对应的值
+                    String cookieValue = cookie.getValue();
+                    //解码
+                    cookieValue = URLDecoder.decode(cookieValue);
+                    //字符串转json数组
+                    JSONArray jsonArray = JSONArray.fromObject(cookieValue);
+
+                    ebCartList = (List<EbCart>) JSONSerializer.toJava(jsonArray, jsonConfig);
+                    for (EbCart ebCart:ebCartList) {
+                        EbSku ebSku = ebSkuService.getSkuDetailByIdFromRedis(ebCart.getSkuId());
+                        if (ebSku.getStockInventory()<ebCart.getQuantity()) {
+                            result= ebSku.getEbItem().getItemName();
+                            for (EbSpecValue ebSpecValue:ebSku.getEbSpecValueList()) {
+                                result=result+ebSpecValue.getSpecValue();
+                            }
+                            result=result+"库存不足"+ebCart.getQuantity()+"个,实际库存是"+ebSku.getStockInventory();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

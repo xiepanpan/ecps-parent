@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,6 +147,38 @@ public class EbUserController {
         session.setAttribute("user",tsPtlUser);
         // 重定向到商品首页
         return "redirect:/item/toIndex.do";
+    }
+
+    /**
+     * ajax调用登录
+     * @param username
+     * @param password
+     * @param captcha
+     * @param session
+     * @param printWriter
+     */
+    @RequestMapping("/loginAjax.do")
+    public void loginAjax(String username, String password, String captcha, HttpSession session,PrintWriter printWriter) {
+        //获得sesion中正确的验证码
+        String captchaSession = (String) session.getAttribute("piccode");
+        if (!StringUtils.equalsIgnoreCase(captchaSession,captcha)) {
+            //写入验证码错误信息
+            printWriter.write("captcha_error");
+            return;
+        }
+        password = MD5.GetMD5Code(password);
+        Map<String,String> map = new HashMap<>();
+        map.put("username",username);
+        map.put("password",password);
+        TsPtlUser tsPtlUser = tsPtlUserService.selectUserByUsernameAndPwd(map);
+        if(tsPtlUser==null) {
+            //在数据库中为查到用户信息
+            printWriter.write("userpwd_error");
+            return;
+        }
+        //用户信息写入session
+        session.setAttribute("user",tsPtlUser);
+        printWriter.write("success");
     }
 
     @RequestMapping(value = "/getUser.do")

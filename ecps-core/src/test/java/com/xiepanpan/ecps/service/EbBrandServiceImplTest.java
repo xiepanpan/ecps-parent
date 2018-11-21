@@ -12,8 +12,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 /**
  * describe:
  *
@@ -72,6 +70,9 @@ public class EbBrandServiceImplTest {
         FMutil.ouputFile("productDetail.ftl",ebItem.getItemId()+".html",map);
     }
 
+    /**
+     * 最小销售单元导入到redis中
+     */
     @Test
     public void importEbSkuToRedis(){
         ebRedisService.importEbSkuToRedis();

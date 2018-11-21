@@ -40,11 +40,166 @@
                 tipShow('#transitAlert');
             });
 
+            //校验登录界面输入框是否为空
+            $(".bg_text input").blur(function () {
+                //获得离开焦点的值
+                var val = $(this).val();
+                val = $.trim(val);
+                //取name属性的值
+                var inputName = $(this).attr("name");
+                if (val==null||val=="") {
+                    if(inputName=="username"){
+                        $("#loginAlertError").html("请输入用户名");
+                    }else if (inputName=="password") {
+                        $("#loginAlertError").html("请输入密码");
+                    }else if (inputName=="captcha") {
+                        $("#loginAlertError").html("请输入验证码");
+                    }
+                    //显示500毫秒
+                    $("#loginAlertError").show(500);
+                }else {
+                    $("#loginAlertError").hide(500);
+                }
+            })
 
         });
 
         function trueBuy() {
-            window.location.href = "./confirmProductCase.jsp";
+            if (isLgoin()) {
+                var result = validCart();
+                if (result=="success") {
+                    window.location.href="${path}/order/toSubmitOrder.do";
+                }else {
+                    alert(result);
+                }
+            } else {
+                tipShow("#loginAlert");
+            }
+        }
+
+        /**
+         * 判断是否登录
+         * @returns {boolean}
+         */
+        function isLgoin() {
+            var result = false;
+            $.ajax({
+                url:path+"/user/getUser.do",
+                type:"post",
+                dataType:"text",
+                async:false,
+                success:function (data) {
+                    // alert(data);
+                    var jsonObj =$.parseJSON(data);
+                    if (jsonObj.user!=null){
+                        result= true;
+                    }
+                }
+            })
+            return result;
+        }
+        function changeNum(skuId,quantity) {
+            if (quantity==0) {
+                if (confirm("确认要移除该商品吗？")){
+                    window.location.href = "${path}/cart/removeCart.do?skuId="+skuId;
+                }
+            } else {
+                var result = validSkuStock(skuId);
+                if (result.ebSku.stockInventory<quantity) {
+                    //当前库存不足
+                    alert("当前库存不足"+quantity+"个，仅有"+result.ebSku.stockInventory+"个");
+                    //大于库存则设置为库存的数量
+                    window.location.href = "${path}/cart/modifyCart.do?skuId="+skuId+"&modifyQuantity="+result.ebSku.stockInventory;
+                }else {
+                    window.location.href = "${path}/cart/modifyCart.do?skuId="+skuId+"&modifyQuantity="+quantity;
+                }
+            }
+        }
+        function validSkuStock(skuId) {
+            //默认库存足够
+            var result = null;
+            $.ajax({
+                url:"${path}/item/getSkuById.do",
+                type:"post",
+                async:false,
+                dataType:"text",
+                data:{
+                    skuId:skuId
+                },
+                success:function (data) {
+                    var jsonObj = $.parseJSON(data);
+                    result=jsonObj;
+                },
+                error:function () {
+                    alert("库存校验错误");
+                }
+            })
+            return result;
+        }
+        function changeImage() {
+            //有的浏览器在请求url相同的时候会不调用后台 从缓存中取 因此加上时间戳参数
+            var cPath = path+"/user/getImage.do?date="+new Date();
+            $("#captchaImage").attr("src",cPath);
+        }
+        function loginAjax() {
+            var username= $("#username").val();
+            var password = $("#password").val();
+            var captcha = $("#captcha").val();
+            var result = null;
+            $.ajax({
+                url:"${path}/user/loginAjax.do",
+                type:"post",
+                dataType:"text",
+                data:{
+                    username:username,
+                    password:password,
+                    captcha:captcha
+                },
+                success:function (data) {
+                    if (data=="captcha_error"){
+                        $("#loginAlertError").html("验证码错误");
+                        $("#loginAlertError").show(500);
+                    }else if (data=="userpwd_error") {
+                        $("#loginAlertError").html("用户名或密码错误");
+                        $("#loginAlertError").show(500);
+                    }else {
+                        tipHide("#loginAlert");
+                        $("#loginAlertIs").html(username);
+                        //未登录的登录成功后进行库存校验
+                        var result = validCart();
+                        if (result=="success") {
+                            window.location.href="${path}/order/toSubmitOrder.do";
+                        }else {
+                            alert(result);
+                        }
+                    }
+                },
+                error:function () {
+                    alert("登录失败")
+                }
+            })
+
+
+        }
+
+        /**
+         * 结算前校验购物车所有商品库存
+         */
+        function validCart() {
+            var result = "success";
+            $.ajax({
+                url:"${path}/cart/validCart.do",
+                type:"post",
+                dataType:"text",
+                async:false,
+                success:function (data) {
+                    result=data;
+                },
+                error:function () {
+                    alert("库存校验失败")
+                }
+            })
+            return result;
         }
     </script>
 </head>
@@ -160,9 +315,9 @@
                         </td>
                         <td>${ebCart.ebSku.skuPrice}</td>
                         <td>
-                            <a href="javascript:void(0);" title="减" class="inb arr">-</a>
-                            <input type="text" class="txts" size="1" name="" value="${ebCart.quantity}"/>
-                            <a href="javascript:void(0);" title="加" class="inb arr">+</a></td>
+                            <a href="javascript:void(0);" title="减" class="inb arr" onclick="changeNum(${ebCart.skuId},${ebCart.quantity-1})">-</a>
+                            <input type="text" class="txts" size="1" name="" onblur="changeNum(${ebCart.skuId},this.value)" value="${ebCart.quantity}"/>
+                            <a href="javascript:void(0);" title="加" class="inb arr" onclick="changeNum(${ebCart.skuId},${ebCart.quantity+1})">+</a></td>
                         <td>￥${ebCart.ebSku.skuPrice*ebCart.quantity}</td>
                         <td class="blue"><a href="javascript:void(0);" title="删除">删除</a><br/><a href="javascript:void(0);"
                                                                                                 title="收藏">收藏</a></td>
@@ -221,53 +376,32 @@
         <ul class="uls form">
             <li id="loginAlertError" class="errorTip" style="display:none"></li>
             <li>
-                <label>帐号类型：</label>
-                <dl class="bg_text" style="z-index:3">
-                    <dd class="hidden">
-                        <a href="javascript:void(0);" title="手机号码">手机号码</a>
-                        <a href="javascript:void(0);" title="用户名">用户名</a>
-                    </dd>
-                    <dt title="请选择帐号类型">请选择帐号类型</dt>
-                </dl>
-            </li>
-            <li>
-                <label>手机号码：</label>
+                <label>用户名：</label>
                 <span class="bg_text">
-				<input type="text" maxlength="50" vld="{required:true}" name="loginUserName" id="loginUserName"
+				<input type="text" maxlength="50" vld="{required:true}" name="username" id="username"
                        reg1="^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$"
                        desc="用户名长度不超过50个，必须是邮箱格式！"/>
 				<em id="userNameLabel" class="def">请输入手机号码</em>
 			</span>
                 <span class="word"><a title="免费注册" href="/ecps-portal/ecps/portal/register.do">免费注册</a></span>
             </li>
-            <li>
-                <label>登录模式：</label>
-                <dl class="bg_text" style="z-index:2">
-                    <dd class="hidden">
-                        <a href="javascript:void(0);" title="服务密码">服务密码</a>
-                        <a href="javascript:void(0);" title="网站密码">网站密码</a>
-                    </dd>
-                    <dt title="请选择帐号类型">请选择登录模式</dt>
-                </dl>
-            </li>
-            <li><label>服务密码：</label>
-                <span class="bg_text"><input type="password" vld="{required:true}" maxlength="20" name="loginPassword"
-                                             id="loginPassword" value="" reg1="^.{6,20}$"
+            <li><label>密码：</label>
+                <span class="bg_text">
+                    <input type="password" vld="{required:true}" maxlength="20" name="password"
+                                             id="password" value="" reg1="^.{6,20}$"
                                              desc="密码长度范围为6-20，允许为中英文、数字或特殊字符！"/></span>
             </li>
             <li>
                 <label for="captcha">验 证 码：</label>
-                <span class="bg_text small"><input type="text" vld="{required:true}" maxlength="7" name="loginCaptcha"
-                                                   id="loginCaptcha" value="" reg1="^\w{6}$" desc="验证码不正确"/></span>
-                <img alt="换一张" id="loginCaptchaCode" class="code"
-                     onclick="this.src='/ecps-portal/captcha.svl?d='+new Date().getTime();"
-                     src="../../res/img/pic/code.png"/><a href="#"
-                                                          onclick="document.getElementById('loginCaptchaCode').src='/ecps-portal/captcha.svl?d='+new Date().getTime();"
-                                                          title="换一张">换一张</a>
+                <span class="bg_text small">
+                    <input type="text" vld="{required:true}" maxlength="7" name="captcha"
+                                                   id="captcha" value="" reg1="^\w{6}$" desc="验证码不正确"/></span>
+                <img alt="换一张" id="captchaImage" class="code" onclick="changeImage()" src="${path}/user/getImage.do"/>
+                <a href="#" onclick="changeImage()" title="换一张">换一张</a>
             </li>
             <li class="gray"><label>&nbsp;</label><input type="checkbox" name="">记住我的手机号码</li>
             <li><label>&nbsp;</label><input type="button" id="loginSubmit" class="hand btn66x23" value="登 录"
-                                            onclick="loginAjax('/ecps-portal/ecps/portal/item/landingAjax.do');"><a
+                                            onclick="loginAjax();"><a
                     title="忘记密码？" href="/ecps-portal/ecps/portal/getpwd/getpwd1.do">忘记密码？</a></li>
             <!--li class="alg_c dev gray">还不是移动商城会员？<a title="免费注册" href="/ecps-portal/ecps/portal/register.do">免费注册</a></li-->
         </ul>
