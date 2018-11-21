@@ -14,5 +14,7 @@
         <mapper resource="com/xiepanpan/ecps/mapper/TsPtlUserMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbShipAddrMapper.xml"/>
         <mapper resource="com/xiepanpan/ecps/mapper/EbAreaMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbOrderMapper.xml"/>
+        <mapper resource="com/xiepanpan/ecps/mapper/EbOrderDetailMapper.xml"/>
     </mappers>
 </configuration>

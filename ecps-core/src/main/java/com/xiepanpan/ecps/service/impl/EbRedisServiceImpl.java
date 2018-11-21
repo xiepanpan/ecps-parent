@@ -1,6 +1,8 @@
 package com.xiepanpan.ecps.service.impl;
 
+import com.xiepanpan.ecps.dao.EbShipAddrDao;
 import com.xiepanpan.ecps.dao.EbSkuDao;
+import com.xiepanpan.ecps.model.EbShipAddr;
 import com.xiepanpan.ecps.model.EbSku;
 import com.xiepanpan.ecps.model.EbSpecValue;
 import com.xiepanpan.ecps.service.EbRedisService;
@@ -23,6 +25,8 @@ public class EbRedisServiceImpl implements EbRedisService {
 
     @Autowired
     private EbSkuDao ebSkuDao;
+    @Autowired
+    private EbShipAddrDao ebShipAddrDao;
 
     @Override
     public void importEbSkuToRedis() {
@@ -50,6 +54,32 @@ public class EbRedisServiceImpl implements EbRedisService {
                 jedis.hset("ebSku:"+ebSku.getSkuId()+":ebSpecValue:"+ebSpecValue.getSpecId(),"skuId",ebSpecValue.getSkuId()+"");
                 jedis.hset("ebSku:"+ebSku.getSkuId()+":ebSpecValue:"+ebSpecValue.getSpecId(),"specValue",ebSpecValue.getSpecValue()+"");
             }
+        }
+    }
+
+    /**
+     * list类型 user:3002:addrList :[1002,1003]
+     * hset    user:3002:addr:1002: [{shipAddrId,1002},{shipName,"张三"},,,]
+     * 这里只导入一个用户的收货地址信息
+     */
+    @Override
+    public void importEbShipAddrToRedis() {
+        Jedis jedis = new Jedis(ECPSUtils.readProp("redis_ip"), Integer.parseInt(ECPSUtils.readProp("redis_port")),100000);
+        List<EbShipAddr> ebShipAddrList = ebShipAddrDao.selectAddrByUserId((long) 3002);
+        for (EbShipAddr ebShipAddr:ebShipAddrList) {
+            jedis.lpush("user:3002:addrList",ebShipAddr.getShipAddrId()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"shipAddrId",ebShipAddr.getShipAddrId()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"shipName",ebShipAddr.getShipName()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"province",ebShipAddr.getProvince()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"city",ebShipAddr.getCity()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"district",ebShipAddr.getDistrict()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"zipCode",ebShipAddr.getZipCode()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"addr",ebShipAddr.getAddr()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"phone",ebShipAddr.getPhone()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"defaultAddr",ebShipAddr.getDefaultAddr()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"provText",ebShipAddr.getProvText()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"cityText",ebShipAddr.getCityText()+"");
+            jedis.hset("user:3002:addr:"+ebShipAddr.getShipAddrId(),"distText",ebShipAddr.getDistText()+"");
         }
     }
 }

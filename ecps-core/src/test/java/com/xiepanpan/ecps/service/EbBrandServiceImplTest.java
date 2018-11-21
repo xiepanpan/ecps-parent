@@ -77,4 +77,9 @@ public class EbBrandServiceImplTest {
     public void importEbSkuToRedis(){
         ebRedisService.importEbSkuToRedis();
     }
+
+    @Test
+    public void importEbShipAddrToRedis(){
+        ebRedisService.importEbShipAddrToRedis();
+    }
 }

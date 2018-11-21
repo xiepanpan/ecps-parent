@@ -6,10 +6,13 @@ import com.xiepanpan.ecps.model.EbShipAddr;
 import com.xiepanpan.ecps.model.TsPtlUser;
 import com.xiepanpan.ecps.service.EbShipAddrService;
 import com.xiepanpan.ecps.service.TsPtlUserService;
+import com.xiepanpan.ecps.utils.ECPSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.ejb.EJBs;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,5 +53,14 @@ public class EbShipAddrServiceImpl implements EbShipAddrService {
             //更新收货地址
             ebShipAddrDao.updateAddr(ebShipAddr);
         }
+    }
+
+    @Override
+    public List<EbShipAddr> selectAddrByUserIdFromRedis(Long userId) {
+        Jedis jedis = new Jedis(ECPSUtils.readProp("redis_ip"),new Integer(ECPSUtils.readProp("redis_port")));
+        List<EbShipAddr> ebShipAddrList = new ArrayList<EbShipAddr>();
+        List<String> addrIds = jedis.lrange("user:" + userId + ":addrList", 0, -1);
+
+        return null;
     }
 }

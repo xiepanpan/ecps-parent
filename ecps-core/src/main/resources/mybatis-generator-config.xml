@@ -9,6 +9,8 @@
     <classPathEntry location="C:\Users\xpp\.m2\repository\com\oracle\ojdbc14\10.2.0.4.0\ojdbc14-10.2.0.4.0.jar" />
     <!-- 配置数据源和生成的代码所存放的位置 -->
     <context id="context1">
+        <!--使用自定义插件-->
+        <!--<commentGenerator type="com.xiepanpan.ecps.utils.MyCommentGenerator"></commentGenerator>-->
         <jdbcConnection driverClass="oracle.jdbc.OracleDriver"
                         connectionURL="jdbc:oracle:thin:@192.168.164.128:1521:orcl" userId="scott"
                         password="tiger" />

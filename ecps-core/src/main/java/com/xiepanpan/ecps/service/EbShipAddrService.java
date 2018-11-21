@@ -34,4 +34,11 @@ public interface EbShipAddrService {
      */
     public void saveOrUpdateAddr(EbShipAddr ebShipAddr);
 
+    /**
+     * 从redis中通过用户Id查收货地址
+     * @param userId
+     * @return
+     */
+    public List<EbShipAddr> selectAddrByUserIdFromRedis(Long userId);
+
 }

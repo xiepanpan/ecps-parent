@@ -13,6 +13,14 @@ import java.util.List;
  */
 public interface EbRedisService {
 
+    /**
+     * 导入最小销售单元到redis
+     */
     public void importEbSkuToRedis();
+
+    /**
+     * 导入收货地址单元到redis
+     */
+    public void importEbShipAddrToRedis();
 
 }
