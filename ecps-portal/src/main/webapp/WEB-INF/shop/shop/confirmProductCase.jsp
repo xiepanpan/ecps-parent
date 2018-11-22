@@ -59,6 +59,8 @@
                 var val = $(this).val();
                 if (val == 'add') {
                     $('#addAddress').fadeIn('slow');
+                }else {
+                    $("#addAddress").hide();
                 }
             });
 
@@ -127,48 +129,7 @@
             <li class="dev"><a href="#" title="在线客服">在线客服</a></li>
             <li class="dev"><a href="#" title="关于中国移动">关于中国移动</a></li>
             <li class="dev after"><a href="#" title="English">English</a></li>
-            <!--
-                <li class="dev"><a href="#" title="购物车2件" class="icon_car">购物车<var>2</var>件</a></li>
-                <li class="dev"><a href="javascript:void(0)" id="addFavorite">加入收藏夹</a></li>
-                <li class="dev"><a href="javascript:void(0)" id="setHome">设为首页</a></li>
 
-                <li class="sit"><a href="javascript:void(0);" title="网站群链接" class="sel">网站群链接<cite class="inb"></cite></a>
-                <ul class="ul bx_bottom" style="display:none">
-                <li><a href="http://www.ah.10086.cn" title="安徽公司">安徽公司</a></li>
-                <li><a href="http://www.bj.10086.cn" title="北京公司">北京公司</a></li>
-                <li><a href="http://www.cq.10086.cn" title="重庆公司">重庆公司</a></li>
-                <li><a href="http://www.fj.10086.cn" title="福建公司">福建公司</a></li>
-                <li><a href="http://www.gs.10086.cn" title="甘肃公司">甘肃公司</a></li>
-                <li><a href="http://www.gd.10086.cn" title="广东公司">广东公司</a></li>
-                <li><a href="http://www.gx.10086.cn" title="广西公司">广西公司</a></li>
-                <li><a href="http://www.gz.10086.cn" title="贵州公司">贵州公司</a></li>
-                <li><a href="http://www.hi.10086.cn" title="海南公司">海南公司</a></li>
-                <li><a href="http://www.he.10086.cn" title="河北公司">河北公司</a></li>
-                <li><a href="http://www.ha.10086.cn" title="河南公司">河南公司</a></li>
-                <li><a href="http://www.hl.10086.cn" title="黑龙江公司">黑龙江公司</a></li>
-                <li><a href="http://www.hb.10086.cn" title="湖北公司">湖北公司</a></li>
-                <li><a href="http://www.hn.10086.cn" title="湖南公司">湖南公司</a></li>
-                <li><a href="http://www.js.10086.cn" title="江苏公司">江苏公司</a></li>
-                <li><a href="http://www.jx.10086.cn" title="江西公司">江西公司</a></li>
-                <li><a href="http://www.jl.10086.cn" title="吉林公司">吉林公司</a></li>
-                <li><a href="http://www.ln.10086.cn" title="辽宁公司">辽宁公司</a></li>
-                <li><a href="http://www.nm.10086.cn" title="内蒙古公司">内蒙古公司</a></li>
-                <li><a href="http://www.nx.10086.cn" title="宁夏公司">宁夏公司</a></li>
-                <li><a href="http://www.qh.10086.cn" title="青海公司">青海公司</a></li>
-                <li><a href="http://www.sd.10086.cn" title="山东公司">山东公司</a></li>
-                <li><a href="http://www.sn.10086.cn" title="陕西公司">陕西公司</a></li>
-                <li><a href="http://www.sx.10086.cn" title="山西公司">山西公司</a></li>
-                <li><a href="http://www.sh.10086.cn" title="上海公司">上海公司</a></li>
-                <li><a href="http://www.sc.10086.cn" title="四川公司">四川公司</a></li>
-                <li><a href="http://www.tj.10086.cn" title="天津公司">天津公司</a></li>
-                <li><a href="http://www.xj.10086.cn" title="新疆公司">新疆公司</a></li>
-                <li><a href="http://www.xz.10086.cn" title="西藏公司">西藏公司</a></li>
-                <li><a href="http://www.yn.10086.cn" title="云南公司">云南公司</a></li>
-                <li><a href="http://www.zj.10086.cn" title="浙江公司">浙江公司</a></li>
-                <li class="clr"><a href="http://www.chinamobileltd.com" title="chinamobileltd">chinamobileltd</a></li>
-                <li class="clr"><a href="http://www.cmdi.10086.cn" title="中国移动设计院">中国移动设计院</a></li>
-                <li class="clr"><a href="http://labs.10086.cn" title="中国移动研究院">中国移动研究院</a></li>
-                </ul>-->
             </li>
         </ul>
     </div>
@@ -231,9 +192,18 @@
                     <h3 title="常用地址">常用地址</h3>
                     <div class="box_d bg_gray2 ofc">
                         <table cellspacing="0" summary="" id="adrList" class="tab">
-
+                        <c:forEach items="${ebShipAddrList}" var="ebShipAddr">
                             <tr>
-                                <td colspan="4"><input type="radio" value="add" name="address"/>新增收货地址</td>
+                                <td colspan="4">
+                                    <input type="radio" value="${ebShipAddr.shipAddrId}" <c:if test="${ebShipAddr.defaultAddr==1}">checked</c:if> name="address"/>
+                                    ${ebShipAddr.provText}&nbsp;${ebShipAddr.cityText}&nbsp;${ebShipAddr.distText}&nbsp;${ebShipAddr.addr}&nbsp;${ebShipAddr.zipCode}&nbsp;${ebShipAddr.shipName}&nbsp;${ebShipAddr.phone}
+                                </td>
+                            </tr>
+                        </c:forEach>
+                            <tr>
+                                <td colspan="4">
+                                    <input type="radio" value="add" name="address"/>新增收货地址
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -344,33 +314,50 @@
                 <thead>
                 <tr>
                     <th>商品编号</th>
-                    <th class="wp">商品名称</th>
+                    <th>商品名称</th>
+                    <th>规格</th>
                     <th>商品价格（元）</th>
                     <th>数量</th>
                     <th>小计（元）</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>${sku.item.itemNo }</td>
-                    <td class="img48x20">
-                        <span class="inb"><img src="${upload }${sku.item.imgSize1 }"/></span>
-                        <a href="#" title="1381050188" class="b f20">${sku.item.itemName }</a>
-                    </td>
-                    <td>￥${sku.skuPrice }</td>
-                    <td>${buyNum }</td>
-                    <td class="orange">￥${sku.skuPrice*buyNum }</td>
-                </tr>
+                <c:forEach items="${ebCartList}" var="ebCart">
+                    <tr>
+                        <td>${ebCart.ebSku.ebItem.itemNo}</td>
+                        <td class="nwp pic">
+                            <ul class="uls">
+                                <li>
+                                    <a href="${path}/html/${ebCart.ebSku.ebItem.itemId}.html" title="" class="pic"><img src="${request_file_path}${ebCart.ebSku.ebItem.imgs}"
+                                                                                                                        alt="摩托罗拉ME525"/></a>
+                                    <dl>
+                                        <dt><a href="${path}/html/${ebCart.ebSku.ebItem.itemId}.html" title="">${ebCart.ebSku.ebItem.itemName}</a></dt>
+                                    </dl>
+                                </li>
+
+                            </ul>
+                        </td>
+                        <td>
+                            <c:forEach items="${ebCart.ebSku.ebSpecValueList}" var="ebSpecValue">
+                                ${ebSpecValue.specValue}
+                            </c:forEach>
+                        </td>
+                        <td>${ebCart.ebSku.skuPrice}</td>
+                        <td>
+                            ${ebCart.quantity}
+                        <td>￥${ebCart.ebSku.skuPrice*ebCart.quantity}</td>
+                    </tr>
+                </c:forEach>
                 <tr>
                     <th colspan="5" class="alg_r">
-                        <b>金额总计：</b><var class="orange">￥${sku.skuPrice*buyNum }</var>
+                        <b>金额总计：</b><var class="orange">￥${totalPrice }</var>
                     </th>
                 </tr>
                 </tbody>
             </table>
 
         </div>
-
+        <input type="hidden" name="orderSum" value="${totalPrice}">
         <div class="confirm mt">
             <div class="tl"></div>
             <div class="tr"></div>
@@ -388,13 +375,13 @@
                         <input type="hidden" name="orderSum" value="${sku.skuPrice*buyNum }"/>
                         <input type="hidden" name="skuId" value="${sku.skuId }"/>
                         <input type="hidden" name="buyNum" value="${buyNum }"/>
-                        <dt>最终订单金额：<cite>(共<var id="totalNum"><c:out value="${totalItemNum }"/></var>个商品)</cite></dt>
-                        <dd><em class="l">商品金额：</em>￥<var><fmt:formatNumber value="${totalMoney/100}"
+                        <dt>最终订单金额：<cite>(共<var id="totalNum"><c:out value="${ebItemNum }"/></var>个商品)</cite></dt>
+                        <dd><em class="l">商品金额：</em>￥<var><fmt:formatNumber value="${totalPrice}"
                                                                             pattern="#0.00"/></var></dd>
                         <dd><em class="l">运费：</em>￥<var><c:out value="0.00"/></var></dd>
                         <dd class="orange"><em class="l">应付总额：</em>￥<var id="totalMoney"><fmt:formatNumber
-                                value="${sku.skuPrice*buyNum }" pattern="#0.00"/></var></dd>
-                        <dd class="alg_c"><input id="submitOrderID" type="submit" value="结 算" class="hand btn136x36a"
+                                value="${totalPrice }" pattern="#0.00"/></var></dd>
+                        <dd class="alg_c"><input id="submitOrderID" type="submit" value="提交订单" class="hand btn136x36a"
                             "/>
                         </dd>
                     </dl>

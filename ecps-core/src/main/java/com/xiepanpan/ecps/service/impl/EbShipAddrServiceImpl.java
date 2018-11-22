@@ -39,6 +39,36 @@ public class EbShipAddrServiceImpl implements EbShipAddrService {
     }
 
     @Override
+    public EbShipAddr selectAddrByIdFromRedis(Long userId,Long addrId) {
+        Jedis jedis = new Jedis(ECPSUtils.readProp("redis_ip"),new Integer(ECPSUtils.readProp("redis_port")));
+        String shipName = jedis.hget("user:" + userId + ":addr:" + addrId, "shipName");
+        String province = jedis.hget("user:" + userId + ":addr:" + addrId, "province");
+        String city = jedis.hget("user:" + userId + ":addr:" + addrId, "city");
+        String district = jedis.hget("user:" + userId + ":addr:" + addrId, "district");
+        String addr = jedis.hget("user:" + userId + ":addr:" + addrId, "addr");
+        String zipCode = jedis.hget("user:" + userId + ":addr:" + addrId, "zipCode");
+        String phone = jedis.hget("user:" + userId + ":addr:" + addrId, "phone");
+        String defaultAddr = jedis.hget("user:" + userId + ":addr:" + addrId, "defaultAddr");
+        String provText = jedis.hget("user:" + userId + ":addr:" + addrId, "provText");
+        String cityText = jedis.hget("user:" + userId + ":addr:" + addrId, "cityText");
+        String distText = jedis.hget("user:" + userId + ":addr:" + addrId, "distText");
+        EbShipAddr ebShipAddr = new EbShipAddr();
+        ebShipAddr.setShipAddrId(new Long(addrId));
+        ebShipAddr.setShipName(shipName);
+        ebShipAddr.setProvince(province);
+        ebShipAddr.setCity(city);
+        ebShipAddr.setDistrict(district);
+        ebShipAddr.setAddr(addr);
+        ebShipAddr.setZipCode(zipCode);
+        ebShipAddr.setPhone(phone);
+        ebShipAddr.setDefaultAddr(new Short(defaultAddr));
+        ebShipAddr.setProvText(provText);
+        ebShipAddr.setCityText(cityText);
+        ebShipAddr.setDistText(distText);
+        return ebShipAddr;
+    }
+
+    @Override
     public void saveOrUpdateAddr(EbShipAddr ebShipAddr) {
 
         if (ebShipAddr.getDefaultAddr()==1) {
@@ -60,7 +90,34 @@ public class EbShipAddrServiceImpl implements EbShipAddrService {
         Jedis jedis = new Jedis(ECPSUtils.readProp("redis_ip"),new Integer(ECPSUtils.readProp("redis_port")));
         List<EbShipAddr> ebShipAddrList = new ArrayList<EbShipAddr>();
         List<String> addrIds = jedis.lrange("user:" + userId + ":addrList", 0, -1);
+        for (String addrId:addrIds) {
+            String shipName = jedis.hget("user:" + userId + ":addr:" + addrId, "shipName");
+            String province = jedis.hget("user:" + userId + ":addr:" + addrId, "province");
+            String city = jedis.hget("user:" + userId + ":addr:" + addrId, "city");
+            String district = jedis.hget("user:" + userId + ":addr:" + addrId, "district");
+            String addr = jedis.hget("user:" + userId + ":addr:" + addrId, "addr");
+            String zipCode = jedis.hget("user:" + userId + ":addr:" + addrId, "zipCode");
+            String phone = jedis.hget("user:" + userId + ":addr:" + addrId, "phone");
+            String defaultAddr = jedis.hget("user:" + userId + ":addr:" + addrId, "defaultAddr");
+            String provText = jedis.hget("user:" + userId + ":addr:" + addrId, "provText");
+            String cityText = jedis.hget("user:" + userId + ":addr:" + addrId, "cityText");
+            String distText = jedis.hget("user:" + userId + ":addr:" + addrId, "distText");
+            EbShipAddr ebShipAddr = new EbShipAddr();
+            ebShipAddr.setShipAddrId(new Long(addrId));
+            ebShipAddr.setShipName(shipName);
+            ebShipAddr.setProvince(province);
+            ebShipAddr.setCity(city);
+            ebShipAddr.setDistrict(district);
+            ebShipAddr.setAddr(addr);
+            ebShipAddr.setZipCode(zipCode);
+            ebShipAddr.setPhone(phone);
+            ebShipAddr.setDefaultAddr(new Short(defaultAddr));
+            ebShipAddr.setProvText(provText);
+            ebShipAddr.setCityText(cityText);
+            ebShipAddr.setDistText(distText);
+            ebShipAddrList.add(ebShipAddr);
+        }
 
-        return null;
+        return ebShipAddrList;
     }
 }

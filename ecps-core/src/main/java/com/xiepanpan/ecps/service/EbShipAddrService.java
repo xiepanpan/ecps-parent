@@ -29,6 +29,13 @@ public interface EbShipAddrService {
     public EbShipAddr selectAddrById(Long addrId);
 
     /**
+     * 从redis中根据地址Id查询收货地址信息
+     * @param addrId
+     * @return
+     */
+    public EbShipAddr selectAddrByIdFromRedis(Long userId,Long addrId);
+
+    /**
      * 保存或更新地址信息
      * @param ebShipAddr
      */
