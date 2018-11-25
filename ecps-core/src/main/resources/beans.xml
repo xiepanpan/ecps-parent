@@ -15,6 +15,8 @@
     <!--使用注解管理bean-->
     <context:component-scan base-package="com.xiepanpan.ecps"/>
 
+    <import resource="classpath:activiti.cfg.xml"></import>
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
         <property name="url" value="jdbc:oracle:thin:@192.168.164.128:1521:orcl"></property>
