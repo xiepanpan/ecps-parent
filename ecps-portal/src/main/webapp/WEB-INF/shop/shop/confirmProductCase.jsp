@@ -150,7 +150,7 @@
     <li title="2.填写核对订单信息" class="here">3.填写核对订单信息</li>
     <li title="4.成功提交订单">4.成功提交订单</li>
 </ul>
-<form action="./confirmProductCase2.jsp" method="post">
+<form action="${path }/order/submitOrder.do" method="post">
 
 
     <div class="w ofc case">
@@ -372,9 +372,6 @@
                         <input id="d1" type="hidden" name="d1" value="1"/>
                     </c:if>
                     <dl class="total">
-                        <input type="hidden" name="orderSum" value="${sku.skuPrice*buyNum }"/>
-                        <input type="hidden" name="skuId" value="${sku.skuId }"/>
-                        <input type="hidden" name="buyNum" value="${buyNum }"/>
                         <dt>最终订单金额：<cite>(共<var id="totalNum"><c:out value="${ebItemNum }"/></var>个商品)</cite></dt>
                         <dd><em class="l">商品金额：</em>￥<var><fmt:formatNumber value="${totalPrice}"
                                                                             pattern="#0.00"/></var></dd>

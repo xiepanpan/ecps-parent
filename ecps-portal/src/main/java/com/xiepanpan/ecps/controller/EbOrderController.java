@@ -1,11 +1,10 @@
 package com.xiepanpan.ecps.controller;
 
 
-import com.xiepanpan.ecps.model.EbCart;
-import com.xiepanpan.ecps.model.EbOrder;
-import com.xiepanpan.ecps.model.EbShipAddr;
-import com.xiepanpan.ecps.model.TsPtlUser;
+import com.xiepanpan.ecps.exception.EbStockException;
+import com.xiepanpan.ecps.model.*;
 import com.xiepanpan.ecps.service.EbCartService;
+import com.xiepanpan.ecps.service.EbOrderService;
 import com.xiepanpan.ecps.service.EbShipAddrService;
 import com.xiepanpan.ecps.utils.ECPSUtils;
 import org.apache.commons.lang.StringUtils;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +37,8 @@ public class EbOrderController {
     private EbCartService ebCartService;
     @Autowired
     private EbShipAddrService ebShipAddrService;
+    @Autowired
+    private EbOrderService ebOrderService;
 
     /**
      * 跳转到订单页面
@@ -89,8 +91,37 @@ public class EbOrderController {
             BeanUtils.copyProperties(ebOrder,ebShipAddr);
         }
 
-        //
-        return null;
+        //查询购物车的数据来创建订单的明细
+        List<EbCart> cartList = ebCartService.selectCartList(request, response);
+        List<EbOrderDetail> detailList = new ArrayList<EbOrderDetail>();
+        for(EbCart ebCart : cartList){
+            EbOrderDetail detail = new EbOrderDetail();
+            detail.setItemId(ebCart.getEbSku().getEbItem().getItemId());
+            detail.setItemName(ebCart.getEbSku().getEbItem().getItemName());
+            detail.setItemNo(ebCart.getEbSku().getEbItem().getItemNo());
+            detail.setSkuId(ebCart.getSkuId());
+            String specVals = "";
+            for(EbSpecValue spc : ebCart.getEbSku().getEbSpecValueList()){
+                specVals = specVals + spc.getSpecValue()+",";
+            }
+            specVals = specVals.substring(0, specVals.length() - 1);
+            detail.setSkuSpec(specVals);
+            detail.setMarketPrice(ebCart.getEbSku().getMarketPrice());
+            detail.setSkuPrice(ebCart.getEbSku().getSkuPrice());
+            detail.setQuantity(ebCart.getQuantity());
+            detailList.add(detail);
+        }
+        try {
+            ebOrderService.saveOrder(ebOrder,detailList,request,response);
+            model.addAttribute("ebOrder",ebOrder);
+        } catch (Exception e) {
+            if (e instanceof EbStockException) {
+                model.addAttribute("tip","stock_error");
+            }
+            e.printStackTrace();
+
+        }
+        return "shop/confirmProductCase2";
     }
 
 

@@ -409,4 +409,10 @@
     and ei.audit_status=1
    and es.sku_id = ev.sku_id(+)
   </select>
+
+  <!--更新库存-->
+  <update id="updateStock" parameterType="map">
+    UPDATE  eb_sku t SET  t.stock_inventory=t.stock_inventory-#{quantity}
+    WHERE t.sku_id=#{skuId} AND  t.stock_inventory>=#{quantity}
+  </update>
 </mapper>

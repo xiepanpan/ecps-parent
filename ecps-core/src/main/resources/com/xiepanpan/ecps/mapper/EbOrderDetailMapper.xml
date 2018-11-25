@@ -104,7 +104,7 @@
       COND_ID, PRODUCT_ID, PAYMENT_PRICE, 
       PURCHASE_PRICE, SIMCARD_SUIT_ID, SIMCARD_PACKAGE_ID
       )
-    values (#{orderDetailId,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, #{itemId,jdbcType=DECIMAL}, 
+    values (seqorderdetailid.nextval, #{orderId,jdbcType=DECIMAL}, #{itemId,jdbcType=DECIMAL},
       #{itemName,jdbcType=VARCHAR}, #{itemNo,jdbcType=VARCHAR}, #{skuId,jdbcType=DECIMAL}, 
       #{sku,jdbcType=VARCHAR}, #{skuImg,jdbcType=VARCHAR}, #{skuName,jdbcType=VARCHAR}, 
       #{skuCatType,jdbcType=DECIMAL}, #{skuSpec,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DECIMAL}, 

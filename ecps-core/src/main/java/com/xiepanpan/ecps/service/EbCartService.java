@@ -52,7 +52,7 @@ public interface EbCartService {
      * @param skuId
      * @param quantity
      */
-    public void clearCart(HttpServletRequest request,HttpServletResponse response,Long skuId,Integer quantity);
+    public void clearCart(HttpServletRequest request,HttpServletResponse response);
 
     /**
      * 结算前校验购物车所有商品库存

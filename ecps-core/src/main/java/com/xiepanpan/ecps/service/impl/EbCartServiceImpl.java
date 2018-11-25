@@ -209,8 +209,41 @@ public class EbCartServiceImpl implements EbCartService{
     }
 
     @Override
-    public void clearCart(HttpServletRequest request, HttpServletResponse response, Long skuId, Integer quantity) {
+    public void clearCart(HttpServletRequest request, HttpServletResponse response) {
+        Cookie[] cookies = request.getCookies();
+        List<EbCart> ebCartList= new ArrayList<EbCart>();
+        //json数组转java对象
+        JsonConfig jsonConfig = new JsonConfig();
+        jsonConfig.setRootClass(EbCart.class);
+        //排除属性 不不需要转
+        jsonConfig.setExcludes(new String[]{"ebSku"});
+        if (cookies!=null&&cookies.length>0) {
+            for (Cookie cookie:cookies) {
+                String cookieName = cookie.getName();
+                if (StringUtils.equals(cookieName, ECPSUtils.readProp("cart_key"))) {
+                    //获得购物车cookie中对应的值
+                    String cookieValue = cookie.getValue();
+                    //解码
+                    cookieValue = URLDecoder.decode(cookieValue);
+                    //字符串转json数组
+                    JSONArray jsonArray = JSONArray.fromObject(cookieValue);
 
+                    ebCartList = (List<EbCart>) JSONSerializer.toJava(jsonArray, jsonConfig);
+
+                    ebCartList.clear();
+                }
+            }
+        }
+        //写入cookie中
+        JSONArray jsonArray = JSONArray.fromObject(ebCartList, jsonConfig);
+        String result = jsonArray.toString();
+        //编码
+        result = URLEncoder.encode(result);
+        Cookie cookie = new Cookie("cookie_cart_key",result);
+        //路径 根目录
+        cookie.setPath("/");
+        cookie.setMaxAge(Integer.MAX_VALUE);
+        response.addCookie(cookie);
     }
 
     @Override
