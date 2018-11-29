@@ -10,7 +10,7 @@
         <Menu name="StudentMenu" title="学生管理" page="/shop/student/index.jsp" />
         <!-- 辽宁2期屏蔽该功能 -->
         <!-- <Menu name="SimCardMgmtMenu" title="号卡管理" page="/shop/simcard/index.jsp" /> -->
-        <Menu name="OrderMgmtMenu" title="订单管理" page="/shop/order/index.jsp" />
+        <Menu name="OrderMgmtMenu" title="订单管理" page="/orderManage/toIndex.do" />
         <Menu name="ValetOrderMgmtMenu" title="代客下单" page="/shop/valetorder/index.jsp" />
         <Menu name="EbPtlUserMgmtMenu" title="会员管理" page="/shop/ptlUser/index.jsp" />
         <Menu name="RelationShipMgmtMenu" title="合作伙伴管理" page="/shop/relational/index.jsp"  />

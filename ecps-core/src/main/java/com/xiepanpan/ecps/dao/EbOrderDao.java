@@ -17,4 +17,11 @@ public interface EbOrderDao {
      */
 	public void updateOrder(EbOrder ebOrder);
 
+    /**
+     * 根据订单id查询订单
+     * @param orderId
+     * @return
+     */
+	public EbOrder getOrderById(Long orderId);
+
 }

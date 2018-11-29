@@ -2,6 +2,7 @@ package com.xiepanpan.ecps.service;
 
 import com.xiepanpan.ecps.model.EbOrder;
 import com.xiepanpan.ecps.model.EbOrderDetail;
+import com.xiepanpan.ecps.model.TaskBean;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,4 +31,11 @@ public interface EbOrderFlowService {
      * @param outcome
      */
 	public void completeTaskByPid(String processInstanceId,String outcome);
+
+    /**
+     * 根据签收人查询任务
+     * @param assignee
+     * @return
+     */
+	public List<TaskBean> selectTaskByAssignee(String assignee);
 }

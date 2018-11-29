@@ -1,5 +1,6 @@
 package com.xiepanpan.ecps.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import com.xiepanpan.ecps.dao.EbSkuDao;
 import com.xiepanpan.ecps.exception.EbStockException;
 import com.xiepanpan.ecps.model.EbOrder;
 import com.xiepanpan.ecps.model.EbOrderDetail;
+import com.xiepanpan.ecps.model.TaskBean;
 import com.xiepanpan.ecps.service.EbCartService;
 import com.xiepanpan.ecps.service.EbOrderFlowService;
 import com.xiepanpan.ecps.service.EbOrderService;
@@ -85,6 +87,21 @@ public class EbOrderServiceImpl implements EbOrderService {
 	    orderDao.updateOrder(ebOrder);
 	    ebOrderFlowService.completeTaskByPid(processInstanceId,"付款");
         return null;
+    }
+
+    @Override
+    public List<TaskBean> selectTaskBeanByAssigneeAndIsCall(String assignee, Short isCall) {
+        List<TaskBean> taskBeanList = ebOrderFlowService.selectTaskByAssignee(assignee);
+        List<TaskBean> taskBeanList1 = new ArrayList<TaskBean>();
+        for (TaskBean taskBean:taskBeanList) {
+            String businessKey = taskBean.getBusinessKey();
+            EbOrder ebOrder = orderDao.getOrderById(Long.valueOf(businessKey));
+            if (ebOrder.getIsCall().shortValue()==isCall.shortValue()) {
+                taskBean.setEbOrder(ebOrder);
+                taskBeanList1.add(taskBean);
+            }
+        }
+        return taskBeanList1;
     }
 
 

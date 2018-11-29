@@ -6,9 +6,8 @@ import com.xiepanpan.ecps.model.*;
 import com.xiepanpan.ecps.service.EbCartService;
 import com.xiepanpan.ecps.service.EbOrderService;
 import com.xiepanpan.ecps.service.EbShipAddrService;
-import com.xiepanpan.ecps.utils.ECPSUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,9 +81,8 @@ public class EbOrderController {
      */
     @RequestMapping("/submitOrder.do")
     public String submitOrder(EbOrder ebOrder,HttpServletRequest request,HttpServletResponse response,
-                              Model model,HttpSession session,String address){
+                              Model model,HttpSession session,String address) throws Exception {
         TsPtlUser user = (TsPtlUser) session.getAttribute("user");
-        ebOrder.setPtlUserId(user.getPtlUserId());
         ebOrder.setUsername(user.getUsername());
         ebOrder.setOrderNum(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
         if (!StringUtils.equals(address,"add")) {
@@ -92,6 +91,7 @@ public class EbOrderController {
             BeanUtils.copyProperties(ebOrder,ebShipAddr);
         }
 
+        ebOrder.setPtlUserId(user.getPtlUserId());
         //查询购物车的数据来创建订单的明细
         List<EbCart> cartList = ebCartService.selectCartList(request, response);
         List<EbOrderDetail> detailList = new ArrayList<EbOrderDetail>();

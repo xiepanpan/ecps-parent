@@ -235,7 +235,7 @@
                 </li>
                 <li><label for="telphone">联系电话：</label>
                     <span class="bg_text"><input type="text" id="telphone" name="phone" maxLength="32"
-                                                 vld="{required:true}" class="txt gray" value="请输入手机号码或者固定电话"/></span>
+                                                 vld="{required:true}" class="txt gray"/></span>
                     <span class="pos"><span class="tip warningTip">用户名为4-20位字母、数字或中文组成，字母区分大小写。</span></span>
                 </li>
             </ul>
