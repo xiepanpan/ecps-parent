@@ -14,19 +14,19 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow2" name="付款" sourceRef="noPaidOrder" targetRef="paidOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='付款'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='付款'}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="timeoutOrder" name="超时作废单"></userTask>
     <sequenceFlow id="flow3" name="超时" sourceRef="noPaidOrder" targetRef="timeoutOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='超时'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='超时'}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="readyItemOrder" name="备货单" activiti:exclusive="false"></userTask>
     <userTask id="userGiveupOrder" name="用户作废单"></userTask>
     <sequenceFlow id="flow4" name="外呼成功" sourceRef="paidOrder" targetRef="readyItemOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='外呼成功'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='外呼成功'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow5" name="用户作废" sourceRef="paidOrder" targetRef="userGiveupOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='用户作废'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='用户作废'}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="getItemOrder" name="取货单"></userTask>
     <sequenceFlow id="flow6" name="备货完成" sourceRef="readyItemOrder" targetRef="getItemOrder"></sequenceFlow>
@@ -35,10 +35,10 @@
     <userTask id="sendFailOrder" name="配送失败单"></userTask>
     <userTask id="gotItemOrder" name="已收货单"></userTask>
     <sequenceFlow id="flow8" name="配送成功" sourceRef="sendOrder" targetRef="gotItemOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='配送成功'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='配送成功'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow9" name="配送失败" sourceRef="sendOrder" targetRef="sendFailOrder">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome='配送失败'}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${outcome=='配送失败'}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="returnStockOrder" name="退库单"></userTask>
     <sequenceFlow id="flow10" name="发起退库" sourceRef="sendFailOrder" targetRef="returnStockOrder"></sequenceFlow>

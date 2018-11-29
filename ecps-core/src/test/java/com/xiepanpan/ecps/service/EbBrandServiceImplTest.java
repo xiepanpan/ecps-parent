@@ -30,6 +30,8 @@ public class EbBrandServiceImplTest {
     EbItemService ebItemService;
     @Autowired
     EbRedisService ebRedisService;
+    @Autowired
+    EbOrderFlowService ebOrderFlowService;
 
     /**
      * 测试品牌保存
@@ -81,5 +83,11 @@ public class EbBrandServiceImplTest {
     @Test
     public void importEbShipAddrToRedis(){
         ebRedisService.importEbShipAddrToRedis();
+    }
+
+
+    @Test
+    public void deployFlow(){
+        ebOrderFlowService.deployOrderFlow();
     }
 }

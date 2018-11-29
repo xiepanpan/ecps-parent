@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -112,7 +113,9 @@ public class EbOrderController {
             detailList.add(detail);
         }
         try {
-            ebOrderService.saveOrder(ebOrder,detailList,request,response);
+            String processInstanceId = ebOrderService.saveOrder(ebOrder, detailList, request, response);
+            session.setAttribute("processInstanceId",processInstanceId);
+            session.setAttribute("orderId",ebOrder.getOrderId());
             model.addAttribute("ebOrder",ebOrder);
         } catch (Exception e) {
             if (e instanceof EbStockException) {
@@ -124,6 +127,18 @@ public class EbOrderController {
         return "shop/confirmProductCase2";
     }
 
+    /**
+     * 支付订单
+     * @param session
+     * @param printWriter
+     */
+    @RequestMapping("/payOrder.do")
+    public void payOrder(HttpSession session, PrintWriter printWriter) {
+        String processInstanceId = (String) session.getAttribute("processInstanceId");
+        Long orderId = (Long) session.getAttribute("orderId");
+        ebOrderService.updatePayOrder(processInstanceId,orderId);
+        printWriter.write("success");
+    }
 
 
 }

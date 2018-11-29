@@ -13,5 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 public interface EbOrderService {
 	
 	
-	public void saveOrder(EbOrder order, List<EbOrderDetail> detailList, HttpServletRequest request, HttpServletResponse response);
+	public String saveOrder(EbOrder order, List<EbOrderDetail> detailList, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 更新支付订单
+     * @param processInstanceId
+     * @param orderId
+     * @return
+     */
+	public String updatePayOrder(String processInstanceId,Long orderId);
 }

@@ -14,6 +14,7 @@ import com.xiepanpan.ecps.exception.EbStockException;
 import com.xiepanpan.ecps.model.EbOrder;
 import com.xiepanpan.ecps.model.EbOrderDetail;
 import com.xiepanpan.ecps.service.EbCartService;
+import com.xiepanpan.ecps.service.EbOrderFlowService;
 import com.xiepanpan.ecps.service.EbOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,10 @@ public class EbOrderServiceImpl implements EbOrderService {
 	
 	@Autowired
 	private EbCartService ebCartService;
+	@Autowired
+    private EbOrderFlowService ebOrderFlowService;
 
-	public void saveOrder(EbOrder order, List<EbOrderDetail> detailList, HttpServletRequest request, HttpServletResponse response) {
+	public String saveOrder(EbOrder order, List<EbOrderDetail> detailList, HttpServletRequest request, HttpServletResponse response) {
 		orderDao.saveOrder(order);
 		Map<String,Object> map = new HashMap<String,Object>();
 		for(EbOrderDetail detail: detailList){
@@ -68,11 +71,21 @@ public class EbOrderServiceImpl implements EbOrderService {
 		}
 
 		ebCartService.clearCart(request, response);
-		
-		
-	}
-	
-	
-	
-	
+		//开启流程
+        String processInstanceId = ebOrderFlowService.startInstance(order.getOrderId());
+        return processInstanceId;
+    }
+
+    @Override
+    public String updatePayOrder(String processInstanceId, Long orderId) {
+	    EbOrder ebOrder = new EbOrder();
+	    ebOrder.setOrderId(orderId);
+	    ebOrder.setIsPaid((short) 1);
+	    //更新订单状态
+	    orderDao.updateOrder(ebOrder);
+	    ebOrderFlowService.completeTaskByPid(processInstanceId,"付款");
+        return null;
+    }
+
+
 }

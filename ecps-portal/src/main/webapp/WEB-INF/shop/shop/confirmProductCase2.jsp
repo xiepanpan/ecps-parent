@@ -32,8 +32,17 @@
                 tipShow('#loginAlert');
             });
 
-            $("#promptAlertIs,#payAlertIs").click(function () {
-                tipShow('#promptAlert');
+            $("#payAlertIs").click(function () {
+                $.ajax({
+                    url:"${path}/order/payOrder.do",
+                    type:"post",
+                    dataType:"text",
+                    success:function (data) {
+                        if (data=="success"){
+                            alert("支付成功");
+                        }
+                    }
+                })
             });
 
             $("#transitAlertIs").click(function () {
