@@ -1,9 +1,6 @@
 package com.xiepanpan.ecps.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,6 +99,44 @@ public class EbOrderServiceImpl implements EbOrderService {
             }
         }
         return taskBeanList1;
+    }
+
+    @Override
+    public List<TaskBean> selectTaskBeanByAssignee(String assignee) {
+        List<TaskBean> taskBeanList = ebOrderFlowService.selectTaskByAssignee(assignee);
+        for (TaskBean taskBean:taskBeanList) {
+            String businessKey = taskBean.getBusinessKey();
+            EbOrder ebOrder = orderDao.getOrderById(Long.valueOf(businessKey));
+            taskBean.setEbOrder(ebOrder);
+        }
+        return taskBeanList;
+    }
+
+    @Override
+	public TaskBean selectTBOrderDetail(Long orderId, String taskId) {
+        EbOrder ebOrder = orderDao.selectOrderDetailById(orderId);
+        TaskBean taskBean = ebOrderFlowService.selectTaskBeanByTaskId(taskId);
+        taskBean.setEbOrder(ebOrder);
+        return taskBean;
+	}
+
+    @Override
+    public void completeCall(Long orderId) {
+        EbOrder ebOrder = new EbOrder();
+        ebOrder.setOrderId(orderId);
+        //设置为以外呼
+        ebOrder.setIsCall((short) 1);
+        orderDao.updateOrder(ebOrder);
+    }
+
+    @Override
+    public void updateCompleteTask(Long orderId, String taskId, String outcome) {
+        EbOrder ebOrder = new EbOrder();
+        ebOrder.setOrderId(orderId);
+        ebOrder.setUpdateTime(new Date());
+        orderDao.updateOrder(ebOrder);
+        //完成任务
+        ebOrderFlowService.completeTaskByTid(taskId,outcome);
     }
 
 

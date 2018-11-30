@@ -24,5 +24,10 @@ public class EbOrderDaoImpl extends SqlSessionDaoSupport implements EbOrderDao {
 		return this.getSqlSession().selectOne(ns+"selectByPrimaryKey",orderId);
 	}
 
+	@Override
+	public EbOrder selectOrderDetailById(Long orderId) {
+		return this.getSqlSession().selectOne(ns+"selectOrderDetailById",orderId);
+	}
+
 
 }

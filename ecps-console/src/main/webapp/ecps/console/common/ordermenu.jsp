@@ -5,7 +5,7 @@
 <ul class="ul">
 
 <li><a href="${path}/orderManage/listPayOrder.do?assignee=noPaidOrderer&isCall=0"><samp class="t05"></samp>待付款单</a></li>
-<li><a href="${path}/order/orderCall.do?orderState=1,21,30,31"><samp class="t05"></samp>外呼单</a></li>
+<li><a href="${path}/orderManage/listTaskByAssignee.do?assignee=paidOrderer&dirName=orderCall"><samp class="t05"></samp>外呼单</a></li>
 <li><a href="${path}/order/orderStock.do?orderState=2"><samp class="t05"></samp>备货单</a></li>
 <li><a href="${path}/order/orderCrm.do?orderState=3"><samp class="t05"></samp>CRM单</a></li>
 <li><a href="${path}/order/orderDelivery1.do?orderState=6,32"><samp class="t05"></samp>配送单</a></li>

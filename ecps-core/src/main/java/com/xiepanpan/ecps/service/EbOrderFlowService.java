@@ -38,4 +38,18 @@ public interface EbOrderFlowService {
      * @return
      */
 	public List<TaskBean> selectTaskByAssignee(String assignee);
+
+    /**
+     * 根据任务id查询任务
+     * @param taskId
+     * @return
+     */
+	public TaskBean selectTaskBeanByTaskId(String taskId);
+
+    /**
+     * 根据任务id和输出线完成任务
+     * @param taskId
+     * @param outcome
+     */
+	public void completeTaskByTid(String taskId,String outcome);
 }

@@ -43,9 +43,9 @@
 
         <h2 class="h2_ch">
       <span id="tabs" class="l">
-        <a id="label1" href="${path}/order/getOrdersByOrderState.do?orderState=1,0" title="全部" class="nor">全部</a>
-        <a id="label2" href="${path}/order/getOrdersByOrderState.do?orderState=1" title="未付款待外呼" class="nor">未付款待外呼</a>
-        <a id="label3" href="${path}/order/getOrdersByOrderState.do?orderState=0" title="已外呼" class="nor">已外呼</a>
+        <a id="label1" href="${path}/orderManage/listPayOrder.do?assignee=noPaidOrderer" title="全部" class="nor">全部</a>
+        <a id="label2" href="${path}/orderManage/listPayOrder.do?assignee=noPaidOrderer&isCall=0" title="未付款待外呼" class="nor">未付款待外呼</a>
+        <a id="label3" href="${path}/orderManage/listPayOrder.do?assignee=noPaidOrderer&isCall=1" title="已外呼" class="nor">已外呼</a>
 <%--         <a id="label4" href="${path}/order/orderPay.do?orderState=17"  title="超时作废" class="nor">超时作废</a> --%>
       </span>
 
@@ -84,7 +84,7 @@
                         <td class="nwp">
                             未付款单
                         </td>
-                        <td><a href="${path }/shop/order/orderPay/detail.jsp?orderId=3123">查看</a></td>
+                        <td><a href="${path}/orderManage/viewDetail.do?orderId=${taskBean.ebOrder.orderId}&taskId=${taskBean.task.id}&dirName=orderPay">查看</a></td>
                     </tr>
                 </c:forEach>
 

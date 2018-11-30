@@ -24,4 +24,11 @@ public interface EbOrderDao {
      */
 	public EbOrder getOrderById(Long orderId);
 
+    /**
+     * 根据订单id查询订单详情
+     * @param orderId
+     * @return
+     */
+	public EbOrder selectOrderDetailById(Long orderId);
+
 }

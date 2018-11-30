@@ -56,4 +56,44 @@ public class EbOrderController {
         return "order/orderPay/orderPay";
     }
 
+    /**
+     * 获取指定签收人的任务
+     * @param assignee
+     * @param model
+     * @return
+     */
+    @RequestMapping("/listTaskByAssignee.do")
+    public String listTaskByAssignee(String assignee,Model model,String dirName) {
+        List<TaskBean> taskBeanList = ebOrderService.selectTaskBeanByAssignee(assignee);
+        model.addAttribute("taskBeanList",taskBeanList);
+        return "order/"+dirName+"/orderCall";
+    }
+
+    /**
+     * 查看订单详情
+     * @param orderId
+     * @param taskId
+     * @param dirName
+     * @param model
+     * @return
+     */
+    @RequestMapping("/viewDetail.do")
+    public String viewDetail(Long orderId,String taskId,String dirName,Model model) {
+        TaskBean taskBean = ebOrderService.selectTBOrderDetail(orderId, taskId);
+        model.addAttribute("taskBean",taskBean);
+        return "order/"+dirName+"/detail";
+    }
+
+    @RequestMapping("/completeCall.do")
+    public String completeCall(Long orderId) {
+        ebOrderService.completeCall(orderId);
+        return "redirect:listPayOrder.do?assignee=noPaidOrderer&isCall=0";
+    }
+
+    @RequestMapping("/completeTask.do")
+    public String completeTask(Long orderId,String taskId,String outcome) {
+        ebOrderService.updateCompleteTask(orderId,taskId,outcome);
+        return "redirect:listTaskByAssignee.do?assignee=paidOrderer&dirName=orderCall";
+    }
+
 }
